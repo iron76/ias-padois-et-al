@@ -98,7 +98,7 @@
 %% \address[label2]{}
 
 \author{Vincent Padois}
-\address{Sorbonne Universités, UPMC Univ. Paris 06 and CNRS Institut des Systèmes Intelligents et de Robotique F-75005, Paris, France. Email: vincent.padois@upmc.fr }
+\address{Sorbonne Universit\'{e}s, UPMC Univ. Paris 06 and CNRS Institut des Systèmes Intelligents et de Robotique F-75005, Paris, France. Email: vincent.padois@upmc.fr }
 
 \author{Serena Ivaldi}
 \address{French Institute for Research in Computer Science and Automation (INRIA) Nancy Grand-Est, France. Email: serena.ivaldi@inria.fr}
@@ -118,7 +118,7 @@ Email: mail@jan-peters.net}
 
 
 \begin{abstract}
-Traditional industrial applications involve robots with limited mobility. Consequently, interaction (e.g. manipulation) was treated separately from whole-body posture (e.g. balancing), assuming the robot firmly connected to the ground. Foreseen applications involve robots with augmented autonomy and physical mobility. Within this novel context, physical interaction influences stability and balance. To allow robots to surpass barriers between interaction and posture control, forthcoming robotic research needs to investigate the principles governing whole-body motion and coordination with contact dynamics. There is a need to investigate the principles of motion and coordination of physical interaction, including the aspects related to unpredictability. Recent developments in compliant actuation and touch sensing allow safe and robust physical interaction from unexpected contact including humans. The next advancement for cognitive robots, however, is the ability not only to cope with unpredictable contact, but also to exploit predictable contact in ways that will assist in goal achievement. Last but not least, theoretical results needs to be validated in real-world scenarios with humanoid robots engaged in whole-body goal-directed tasks. Robots should be capable of exploiting rigid supportive contacts, learning to compensate for compliant contacts, and utilising assistive physical interaction from humans.
+Traditional industrial applications involve robots with limited mobility. Consequently, interaction (e.g. manipulation) was treated separately from whole-body posture (e.g. balancing), assuming the robot firmly connected to the ground. Foreseen applications involve robots with augmented autonomy and physical mobility. Within this novel context, physical interaction influences stability and balance. To allow robots to surpass barriers between interaction and posture control, forthcoming robotic research needs to investigate the principles governing whole-body motion and coordination with contact dynamics. There is a need to investigate the principles of motion and coordination of physical interaction, including the aspects related to unpredictability. Recent developments in compliant actuation and touch sensing allow safe and robust physical interaction from unexpected contact including humans. The next advancement for cognitive robots, however, is the ability not only to cope with unpredictable contact, but also to exploit predictable contact in ways that will assist in goal achievement. Last but not least, theoretical results needs to be validated in real-world scenarios with humanoid robots engaged in whole-body goal-directed tasks. Robots should be capable of exploiting rigid supportive contacts, learning to compensate for compliant contacts, and utilising assistive physical interaction from humans. The work presented in this paper presents state-of-the-art in these domains as well as some recent advances made within the framework of the CoDyCo european project.
 \end{abstract}
 
 \begin{keyword}
@@ -195,25 +195,36 @@ External and self-compliance are two fundamental aspects of any interaction. It 
 
 \section{State-of-the-art}
 
-\subsection{Technological state of the art}
+\subsection{Technological state-of-the-art}
 Among the recent achievements in the field of robotics, there are two major technological prerequisites that will play a fundamental role in enhancing whole-body motion capabilities: distributed force and touch sensing. Both technologies have been only recently integrated and used in (humanoid) robots, including the iCub \cite{MettaG._etal2010}.
 Force control is a fundamental property for any autonomous agent in interaction with the environment. First attempts to regulate interaction forces relied on active force and compliance control schemes, typically coupled with custom mechanical designs such as the ones proposed in \cite{Salisbury1988} and \cite{Hayashi2007} , which were eventually implemented on successful commercial manipulators. Similar solutions have been eventually implemented on some humanoid platforms \cite{Cheng2006} \cite{Escande2010}, including the iCub \cite{Fumagalli2012} . Recent theoretical and technological advances have revealed the importance of intentionally introducing mechanical compliance in the design \cite{Pratt1995} and (even more recently) the necessity of actively regulating the actuator passive compliance \cite{Koganezawa2005} \cite{Tonietti2005} \cite{Migliore2005} . It is to be expected that within the next years robots such as iCub will be equipped with variably compliant actuation technologies at some (if not all) of the main joints \cite{Tsagarakis2009} \cite{Tsagarakis2011} .
 Touch is another fundamental sensing capability for autonomous agents willing to interact with an unstructured environment or humans \cite{Argall2010a} . Whole-body distributed touch sensing has been only recently embedded on humanoid robots, but there already exist quite a few examples: Robovie-IV \cite{Mitsunaga2006} , RI-MAN \cite{Mukai2008} , Macra \cite{Hayashi2007}  and Meka \cite{Jain} , just to cite a few. The iCub already integrates a mature technology \cite{Schmitz2011} cover-ing the upper body, legs and feet soles. 
-Finally, several open-source software libraries have been developed in the last years to support research in whole-body dynamics and contact simulation. Several dynamics simulators have been developed for robotics (see \cite{ivaldi2014} for a survey). The most interesting physics engines for our purposes are the ones with Featherstone-like forward dynamics calculation \cite{Featherstone2008} \cite{Yamane2006a} , built-in collision detection and stable numerical contact forces computations \cite{Nakaoka2007} . Among the kinematic and dynamic libraries it is worth citing HuMAnS , a toolbox for analysis and control of both human and humanoid motion, and iDyn, a generic software tool, extensively used in iCub to compute whole-body dynamics and reinforce these computations with measurements coming from sensors embedded in the robot \cite{Fumagalli2012}.
-Human motor control state-of-the-art. Human whole-body motion control has been studied within tasks such as reaching on a supporting surface and sit-to-stand. These movements involve coordination of multiple joints, significant shift of the centre of mass, and control of equilibrium, either in static or dynamic conditions. These are skills learnt early in human childhood but also studied extensively in the context of motor disability, e.g. after neurological insults like stroke, or in the elderly with reduced muscle power, joint flexibility and sensory loss. However, almost nothing is yet known about when healthy subjects choose to make use of contacts with support surfaces. It has been shown that in standing posture, this contact provides augmented sensory information reducing sway \cite{Johannsen2012} , and how in some circumstances, non-weight bearing but informative ``light-touch'' between two standing subjects can cause coupling that leads to increased sway, emphasising that knowledge about the stability and compliance of the contact surface is vital.
-Reach using supports. Human reaching with arm support has not been extensively studied. There is almost no literature on the issue of how humans use one hand to extend their reach space. For example, to lean forwards requires a shift of the trunk and a shift of the centre of mass \cite{Huang2011} . At some point it becomes advantageous to use a supporting surface, allowing a reduction in anticipatory postural adjustments and a simplified control strategy \cite{Slijper2000} . But the decisions about when to implement support using one arm, which will depend on the availability, reliability and compliance of a support surface are almost unstudied \cite{Krishnamoorthy2004} .
+Finally, several open-source software libraries have been developed in the last years to support research in whole-body dynamics and contact simulation. Several dynamics simulators have been developed for robotics (see \cite{ivaldi2014} for a survey). The most interesting physics engines for our purposes are the ones with Featherstone-like forward dynamics calculation \cite{Featherstone2008} \cite{Yamane2006a} , built-in collision detection and stable numerical contact forces computations \cite{Nakaoka2007} . Among the kinematic and dynamic libraries it is worth citing HuMAnS, a toolbox for analysis and control of both human and humanoid motion, and iDyn, a generic software tool, extensively used in iCub to compute whole-body dynamics and reinforce these computations with measurements coming from sensors embedded in the robot \cite{Fumagalli2012}.
+
+\subsection{Human motor control state-of-the-art}
+Human whole-body motion control has been studied within tasks such as reaching on a supporting surface and sit-to-stand. These movements involve coordination of multiple joints, significant shift of the centre of mass, and control of equilibrium, either in static or dynamic conditions. These are skills learnt early in human childhood but also studied extensively in the context of motor disability, e.g. after neurological insults like stroke, or in the elderly with reduced muscle power, joint flexibility and sensory loss. However, almost nothing is yet known about when healthy subjects choose to make use of contacts with support surfaces. It has been shown that in standing posture, this contact provides augmented sensory information reducing sway \cite{Johannsen2012} , and how in some circumstances, non-weight bearing but informative ``light-touch'' between two standing subjects can cause coupling that leads to increased sway, emphasising that knowledge about the stability and compliance of the contact surface is vital.
+
+\subsubsection{Reach using supports}
+Human reaching with arm support has not been extensively studied. There is almost no literature on the issue of how humans use one hand to extend their reach space. For example, to lean forwards requires a shift of the trunk and a shift of the centre of mass \cite{Huang2011} . At some point it becomes advantageous to use a supporting surface, allowing a reduction in anticipatory postural adjustments and a simplified control strategy \cite{Slijper2000} . But the decisions about when to implement support using one arm, which will depend on the availability, reliability and compliance of a support surface are almost unstudied \cite{Krishnamoorthy2004} .
 Sit-to-stand. The postural adjustments that contribute to a sit-to-stand action are well documented. The action requires a shift of centre of mass, development of momentum, and precisely timed hip and knee extension, combining with maintaining stability with ankle control. As motor ability lessens, e.g. in the elderly, compensatory foot placement with increased momentum generation using hip flexion and arm movement is often employed \cite{Janssen2002} . Support from the chair arm or from a cane \cite{Leung2009}  increases stability in the forward axis. Again, decisions about when the support surface would be used, depending on its stability and compliance, are unstudied. The effects of unstable foot support in the sit-to-stand action are studied in \cite{Huang2011} the authors suggests a clear trade-off between support surface stability and manoeuvrability, and argue that adapting to the added uncertainty could help individuals become more manoeuvrable. Finally, there is little work on how the sit-to-stand action changes with elastic support - this has been studied in locomotion and jumping \cite{Arampatzis2001} , but not in inter-actions with support surfaces.
-Dimensionality reduction. Complex multi-joint movements call for control strategies that simplify and reduce degrees of freedom. There are various competing theories of how this can be achieved \cite{Latash2010} . Perhaps most relevant is the uncontrolled manifold hypothesis \cite{Scholz1999} that demonstrates that it is highly effective to allow some parameters to be uncontrolled, if task irrelevant, and to control only a fewer task relevant parameters. In \cite{Scholz1999} Scholz \& Schoner applied this to the sit-to-stand task, and show that the centre of mass in the forward axis is well controlled, head and hand position are less controlled, and vertical head position appears little controlled. How these behaviours change with support is an open question. Equally important is the issue of how high dimensionality whole body motion of human models can be reduced to extract principles of action applicable to robots with different geometries. These are implemented by muscle and joint synergies that reduce the functional degrees of freedom during a given action. There has been very effective use of principal or independent components analyses to capture such human whole body movement and reduce dimensionality (e.g. as in \cite{Forner-Cordero2005} ). Recent developments include extracting functional components, which treat joint-kinematics data as functions instead of as a series of independent samples, and are comparable across groups of subjects \cite{Coffey2011} .
 
-\subsection{Robot Motor Control state of the art}
-In complex scenarios, when the robot and the environment are assumed to be perfectly known, planning approaches explore the possible states of the robot (e.g. configurations of the robot in its environment) in probabilistic graph-like manners \cite{LaValle2006} to determine the sequence of commands to pro-vide to the robot to perform a certain action in free space \cite{Dalibard2009} \cite{Kuffner2001} or in complex contact situations \cite{Bouyarmane2009} \cite{Bouyarmane2011} . Such methods are usually computationally demanding and difficult to apply online. Conversely, when the global goal of the robot is relatively simple, the high-level planner can be almost disregarded because the goal to be achieved can ``easily'' be described a priori in terms of operational tasks \cite{Khatib1986} to be activated and combined. This falls into ``the simultaneous management of multiple operational objectives'', a well-known problem in model-based reactive control. The most popular method to deal with a set of objectives is a hierarchical framework, where operational tasks are typically prioritized in a ``stack'' \cite{Mansard2007} , which found sever-al applications to humanoids \cite{Sentis2010} \cite{Mistry2011} . QP solvers have recently gained popularity in humanoid robotic as they do not require the explicit inversion of any model of the system \cite{abe2007} \cite{colette2008} \cite{Escande2010} \cite{Salini2011} . This corpus of reactive methods mostly succeeds in over-coming the "complexity and uncertainty" factor thanks to the use of feedback. How-ever the proposed solutions are only locally optimal and the overall decision-making process cannot be addressed in the most general cases (i.e. without scripted scenarios). There is obviously a need for approaches where planning and reactive control are combined in a strongly intertwined way. This is not a simple problem: there are very few works where such a combination has actually been tested in a non ad hoc manner. The work of \cite{Alami1997} contributed to describe the necessary control architecture but did not propose any general control solution for such a combination to exist in practice. More recently \cite{PhilippsenRolandandNejatiNeginandSentis2009} introduced an architecture combining a whole body control level and a reactive symbolic planning, while \cite{yoshida2005} focused on dedicated mission-level planning methods for humanoids, coupled to task-level controllers. More recently, \cite{Salini2011} \cite{salini2011b} have proposed an architecture where sequences of operational tasks are generated on the fly based on a fuzzy-logic, rule-based decision engine. This approach, even though efficient in various specific applications, fails to scale-up as the number of required rules explodes with the growing complexity of the considered scenarios.
+\subsubsection{Dimensionality reduction}
+Complex multi-joint movements call for control strategies that simplify and reduce degrees of freedom. There are various competing theories of how this can be achieved \cite{Latash2010} . Perhaps most relevant is the uncontrolled manifold hypothesis \cite{Scholz1999} that demonstrates that it is highly effective to allow some parameters to be uncontrolled, if task irrelevant, and to control only a fewer task relevant parameters. In \cite{Scholz1999} Scholz \& Schoner applied this to the sit-to-stand task, and show that the centre of mass in the forward axis is well controlled, head and hand position are less controlled, and vertical head position appears little controlled. How these behaviours change with support is an open question. Equally important is the issue of how high dimensionality whole body motion of human models can be reduced to extract principles of action applicable to robots with different geometries. These are implemented by muscle and joint synergies that reduce the functional degrees of freedom during a given action. There has been very effective use of principal or independent components analyses to capture such human whole body movement and reduce dimensionality (e.g. as in \cite{Forner-Cordero2005} ). Recent developments include extracting functional components, which treat joint-kinematics data as functions instead of as a series of independent samples, and are comparable across groups of subjects \cite{Coffey2011} .
 
-\subsection{Learning state of the art}
+\subsection{Robot motor control state-of-the-art}
+In complex scenarios, when the robot and the environment are assumed to be perfectly known, planning approaches explore the possible states of the robot (e.g. configurations of the robot in its environment) in probabilistic graph-like manners \cite{LaValle2006} to determine the sequence of commands to pro-vide to the robot to perform a certain action in free space \cite{Dalibard2009} \cite{Kuffner2001} or in complex contact situations \cite{Bouyarmane2009} \cite{Bouyarmane2011} . Such methods are usually computationally demanding and difficult to apply online. Conversely, when the global goal of the robot is relatively simple, the high-level planner can be almost disregarded because the goal to be achieved can ``easily'' be described a priori in terms of operational tasks \cite{Khatib1986} to be activated and combined. This falls into ``the simultaneous management of multiple operational objectives'', a well-known problem in model-based reactive control. The most popular method to deal with a set of objectives is a hierarchical framework, where operational tasks are typically prioritized in a ``stack'' \cite{Mansard2007} , which found sever-al applications to humanoids \cite{Sentis2010} \cite{Mistry2011} . QP solvers have recently gained popularity in humanoid robotic as they do not require the explicit inversion of any model of the system \cite{abe2007} \cite{colette2008} \cite{Escande2010} \cite{Salini2011} . This corpus of reactive methods mostly succeeds in over-coming the "complexity and uncertainty" factor thanks to the use of feedback. However the proposed solutions are only locally optimal and the overall decision-making process cannot be addressed in the most general cases (i.e. without scripted scenarios). There is obviously a need for approaches where planning and reactive control are combined in a strongly intertwined way. This is not a simple problem: there are very few works where such a combination has actually been tested in a non ad hoc manner. The work of \cite{Alami1997} contributed to describe the necessary control architecture but did not propose any general control solution for such a combination to exist in practice. More recently \cite{PhilippsenRolandandNejatiNeginandSentis2009} introduced an architecture combining a whole body control level and a reactive symbolic planning, while \cite{yoshida2005} focused on dedicated mission-level planning methods for humanoids, coupled to task-level controllers. More recently, \cite{Salini2011} \cite{salini2011b} have proposed an architecture where sequences of operational tasks are generated on the fly based on a fuzzy-logic, rule-based decision engine. This approach, even though efficient in various specific applications, fails to scale-up as the number of required rules explodes with the growing complexity of the considered scenarios.
 
+\subsection{Learning}
 Real-world environments are often hard to capture perfectly with physical models. The uncertainty in model predictions is important during controlled physical contacts between a (humanoid) robot system and its environment. Large errors either in the environmental model or in the task will lead to drastic failures and therefore need to be limited as much as possible by model adaptation. Hu-man-inhabited worlds will never allow perfect modelling and instead require that the system generalises the tasks in such a manner that they work in a wide variety of different uncertain scenarios where there is contact between robots and either humans or physical objects. Machine learning approaches are therefore needed. Particularly in whole-body motion they are necessary for the successful implementation of the control architecture, and its implementation and application to the real-worlds scenarios. However, off-the-shelf machine learning methods are concerned with static data sets and require massive amount of computations, often rendering real-time learning in-feasible. To date, a variety of robot learning approaches have been suggested. The most important being model learning, operational space control learning, learning of elementary tasks and hierarchical combinations of tasks, which are briefly evaluated hereinafter.
-Model learning. High model accuracy and constant model adaptation may be key for low torque interaction during contact. Models of the robot dynamics have been learned by real-time regression, e.g., locally weighted projection regression \cite{Schaal2002a} and local Gaussian process regression \cite{Nguyen-tuong2010a} . Nevertheless, if any of these approaches would be given the data from a robot in contact with the environment, it would fit the model to this particular case, as the contact forces would just be treated as an additional nonlinearity. As a result, the model will not generalise to new contact models and instead it would be necessary to learn a new model for each type of contact.
-Operational space control learning. Control in operational space has been approached both as a direct policy learning problem \cite{Peters2008a} as well as an indirect learning problem via forward models \cite{Salaun2010} . Here, the problem may be even more drastic as changing the contact formulation will alter the problem in its essence. As a result, an operational space control law may not transfer at all but rather become highly problematic under new circumstances. 
-Learning of elementary tasks and hierarchical combinations of tasks. While learn-ing of contact-free elementary tasks by the combination of imitation learning and policy search \cite{Abbeel2005} \cite{Kober2010} is a well-explored topic, no general approaches to date can tackle the exact same problem and allow for different contact combination. Furthermore, learning of hierarchical elementary task combinations is still in its infancy. Several interesting approaches have been suggested \cite{Stulp2011a} \cite{Mulling2010} \cite{Muico2011} \cite{Daniel2012} in literature, relying on substantially different insights. Further exploration in this area is clearly needed, especially in unexplored multi-contact scenarios.
+
+\subsubsection{Model learning}
+ High model accuracy and constant model adaptation may be key for low torque interaction during contact. Models of the robot dynamics have been learned by real-time regression, e.g., locally weighted projection regression \cite{Schaal2002a} and local Gaussian process regression \cite{Nguyen-tuong2010a} . Nevertheless, if any of these approaches would be given the data from a robot in contact with the environment, it would fit the model to this particular case, as the contact forces would just be treated as an additional nonlinearity. As a result, the model will not generalise to new contact models and instead it would be necessary to learn a new model for each type of contact.
+
+\subsubsection{Operational space control learning}
+Control in operational space has been approached both as a direct policy learning problem \cite{Peters2008a} as well as an indirect learning problem via forward models \cite{Salaun2010} . Here, the problem may be even more drastic as changing the contact formulation will alter the problem in its essence. As a result, an operational space control law may not transfer at all but rather become highly problematic under new circumstances. 
+
+\subsubsection{Learning of elementary tasks and hierarchical combinations of tasks}
+While learn-ing of contact-free elementary tasks by the combination of imitation learning and policy search \cite{Abbeel2005} \cite{Kober2010} is a well-explored topic, no general approaches to date can tackle the exact same problem and allow for different contact combination. Furthermore, learning of hierarchical elementary task combinations is still in its infancy. Several interesting approaches have been suggested \cite{Stulp2011a} \cite{Mulling2010} \cite{Muico2011} \cite{Daniel2012} in literature, relying on substantially different insights. Further exploration in this area is clearly needed, especially in unexplored multi-contact scenarios.
 While all of these frameworks are well motivated in their domains, they have two major shortcomings from the viewpoint of whole-body motion control: they do not explicitly incorporate contact, and they do not leverage on the analytical robotics and control knowledge surrounding them.
 
 \section{Some of the advances with respect to the state of the art in the CoDyCo project}
@@ -224,7 +235,7 @@ In this section, some of the work performed within the CoDyCo project in order t
 The aim of the work performed on human postural control and whole body motion in contact with environment is to provide a solid multidisciplinary base for future research work within CoDyCo. We made a thorough review and summary of the recent relevant literature on human postural control and whole body motion in contact with environment\footnote{Cf. \href{https://github.com/robotology-playground/codyco-deliverables/blob/master/D2.1/pdf/D2.1.pdf?raw=true}{CoDyCo deliverable~2.1}}. The review examines postural control strategies without and with additional support contacts, types of perturbations that are commonly used to study neuromuscular functions involved in postural control and reviews the methods for stability evaluation of bipedal systems. The review is concluded with examination of stability metrics that can be applied for non-planar contacts. Based on this review an experimental protocol has been designed to explore human strategies used when non-coplanar assistive contacts are made.
 
 \subsubsection{Definition and design of experimental protocols}
-Two state-of-the-art methods were used for perturbation of balance as shown on Figure \ref{fig:exp_protocol_W2} that will allow us to gain understanding how human brain deals with environment in the sense of supportive contacts. Using the same setup we can also validate all biomechanical findings on robotic systems by simply substituting the human subject with a robot. The Moog Hapticmaster robot will be used in experiments with compliant and unpredictable contacts.
+Two state-of-the-art methods were used for perturbation of balance as shown on Figure \ref{fig:exp_protocol_W2} that will allow us to gain understanding how human brain deals with environment in the sense of supportive contacts. Using the same setup we can also validate all biomechanical findings on robotic systems by simply substituting the human subject with a robot. The Moog Haptic master robot will be used in experiments with compliant and unpredictable contacts.
 
 \begin{figure}
 \centering
@@ -247,20 +258,12 @@ We found that an additional supportive hand contact significantly reduced the ma
 
 To properly model all these findings we developed a reduced dimensional (6-link, planar) model of a humanoid to be used as an inverse dynamics model for computing joint torques from human experimental data.
 
-A major challenge of this task is understanding how to determine and measure stability when a human or humanoid robot is in a multi contact situation. The state-of-the-art in postural stability uses traditional metrics such as centre of pressure or zero moment point. However these planar metrics do not apply when there are multiple non-planar contacts. In addition to reviewing the current literature (Task 2.1), we have begun development of new methods for measuring stability margins when a human or humanoid robot has multiple non-planar contacts.
+A major challenge of this task is understanding how to determine and measure stability when a human or humanoid robot is in a multi contact situation. The state-of-the-art in postural stability uses traditional metrics such as centre of pressure or zero moment point. However these planar metrics do not apply when there are multiple non-planar contacts. In addition to reviewing the current literature, we have begun development of new methods for measuring stability margins when a human or humanoid robot has multiple non-planar contacts.
 
 A 3D dynamic model of a human holding to a stable object during continuous perturbations of stance was also created. The model was devised from measurements on 13 male subjects. Using the kinematical data recorded with frequency of 100Hz, forces that the subjects excerted on the ground, and the forces in the handle, we performed an inverse dynamic procedure and obtained joint torques produced by muscles during the experiment. An illustration of the model is shown in Fig. \ref{fig:skeleton}. Using this modelling approach we are now able to efficiently study the biomechanics of humans in contact with the environment.
 
-A study of  the effects of hand contact on the stability of a planar humanoid robot (see Fig.~\ref{planarhumanoid})
-while a momentum based controller is used to control the robot's balancing
-motion was  aslo performed \cite{Azad2014}. It compared the simulation results with the
-results of the experiments on human subjects which are reported in
-\cite{Babic2014}. Both simulations and experiments agreed that different
-values of hand contact forces in different hand positions cause the same
-displacements of the CoP of the foot. This implies that regulating the CoP of
-the foot has the highest priority for both humans and the momentum based
-controller.  This study suggested that the momentum based controller is an
-adequate controller to replicate human behaviour during balancing motions.
+A study of  the effects of hand contact on the stability of a planar humanoid robot (see Fig.~\ref{planarhumanoid}) while a momentum based controller is used to control the robot's balancing motion was  aslo performed \cite{Azad2014}. It compared the simulation results with the results of the experiments on human subjects which are reported in 
+\cite{Babic2014}. Both simulations and experiments agreed that different values of hand contact forces in different hand positions cause the same displacements of the CoP of the foot. This implies that regulating the CoP of the foot has the highest priority for both humans and the momentum based  controller.  This study suggested that the momentum based controller is an adequate controller to replicate human behaviour during balancing motions.
 
 \begin{figure}[!t]
   \centering
@@ -363,10 +366,10 @@ same change at the CoM velocity.
 	\end{center}
 \end{figure}
 
-\paragraph{Strategies of dealing with uncertainties in contact}~\\
+\subsubsection{Strategies of dealing with uncertainties in contact}
 A novel method to study human strategies of dealing with contacts with uncertain environment was developped. In this method the human subject was made to perform psychical contacts with the environment through the robot. The human was included into the robot control loop through human-robot interfaces. The idea is that the human sensorimotor system and cognitive system controls a novel mechanical system, i.e. the robot, in physical interaction with the environment. This implies additional human motor control learning and adaptation that can potentially provide us with a deeper insight into how humans deal with a novel environment.
 
-Another advantage of this approach is that the human sensorimotor system does not use its own limbs to directly make the contacts with the environment, but uses the robotic limb to do so. Compared to pure biomechanical studies, where the measured human behaviour must be further interpreted, adjusted or transformed before it can be used on the robots, in this approach the measured human behaviour can be directly captured and used in the robot control. This study therefore provides a good complement to our conventional biomechanical studies as performed in T2.2.
+Another advantage of this approach is that the human sensorimotor system does not use its own limbs to directly make the contacts with the environment, but uses the robotic limb to do so. Compared to pure biomechanical studies, where the measured human behaviour must be further interpreted, adjusted or transformed before it can be used on the robots, in this approach the measured human behaviour can be directly captured and used in the robot control. This study therefore provides a good complement to our conventional biomechanical studies.
 
 The block scheme of the proposed approach is shown in Fig. \ref{fig:scheme}. The human controlled the motion of the robotic limb with the motion of his/her own limb. In addition to controlling the motion, the human also controlled the impedance of the robot. Primary information about the robot state was relayed to the human through a visual feedback. A haptic device was used to provide the human with an additional feedback about the forces sensed by the robot. While controlling the robot in the proposed human-in-the-loop approach, the human central nervous system had to adapt to a new mechanism through sensorimotor learning to perform the desired contact with the environment.
 \begin{figure}[!t]
@@ -486,7 +489,7 @@ Driven by the question on how human CNS optimizes arm reaching motions when the 
 
 \subsection{Whole-body controllers}
 
-The overall objective of this work is to provide a control architecture dedicated 
+The overall objective of the work on controllers is to provide a control architecture dedicated 
 to humanoid robots involved in personal/service applications, which imply physical interactions,
  i.e. contacts, with the environment. Such a control architecture is a requirement to bridge 
  the existing gap between state-of-the-art methods in humanoid robots control and real-world
@@ -575,132 +578,11 @@ Further details can be found in \cite{Calandra_ICRA15}.
 	
 
 
+\subsection{Learning}
 
+The goal of the work on Learning in CoDyCo is to endow humanoid robots control architectures with the core abilities for the adaptation, generalization and self-improvement of both control laws and tasks that involve physical interaction with humans, and the environment. In this context, we propose learning approaches that work in conjunction with the control architecture devised in the presvious sectio  and rather complement analytical robotic approaches with on-policy learning than starting from scratch. A core idea behind this work is that Learning should complement classical approaches and not supersede them.
 
-
-
-
-
-
-
-
-
-
-\paragraph{Work package 4 progress}
-
-\subparagraph{Generalizing and Improving Elementary Tasks with Contacts (T4.3)}
-
-In this task, we aim to generate new skills from data, where elementary skills 
-are acquired by imitation learning and transferred to novel situations using 
-dynamic systems. During year one, TUD developed a novel representation of 
-movement primitives that can be used for imitation learning from noisy observations.
-Uncertainty of observed trajectories is explicitely modeled and used to generate new skills.
-This movement representation has state-of-the-art capabilities in generalization, 
-coupling between the degrees of freedom of the robot, and moreover, 
-a time varying feedback controller can be derived in closed form. 
-These features are partially illustrated in Figure \ref{fig:promps}.
-This work was published
-last year at the highly competitive conference on neural information processing \cite{Paraschos_NIPS_2013}.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=\linewidth]{./images/ProMPs.png}
-%\label{fig:subfig2}
- \caption{(a)
-Conditioning on different target states. The blue shaded area represents the learned
-trajectory distribution. We condition on different target positions, indicated by the â€˜xâ€™-markers. The
-produced trajectories exactly reach the desired targets while keeping the shape of the demonstrations.
-(b)
-Combination of two ProMPs. The trajectory distributions are indicated by the blue and red
-shaded areas. Both primitives have to reach via-points at different points in time, indicated by
-the $x$€™-markers. We co-activate both primitives with the same activation factor. The trajectory
-distribution generated by the resulting feedback controller now goes through all four via-points.
-(c)
-Blending of two ProMPs. We smoothly blend from the red primitive to the blue primitive. The
-activation factors are shown in the bottom. The resulting movement (green) first follows the red
-primitive and, subsequently, switches to following the blue primitive.
-}
-\label{fig:promps}
-\end{figure}
-
-In another work, published at the international conference on humanoid robots (HUMANOIDS), 
-TUD demonstrated that this probabilistic approach for trajectory generation
-has superior performance against deterministic policies. The use of
-probability distributions over the trajectories increased significantly
- the generalization properties, which was evaluated on a high dimensional table
-tennis scenario [Paraschos, A. and  Neumann, G and  Peters, J., 2013]. 
-In the future work, we plan to incorporate external torque signals to initiate, 
-maintain, and terminate contacts.
-
-TUD also investigated how to learn human robot interaction through imitation. We presented a new approach to robot learning that allows anthropomorphic robots to learn a library of interaction skills from demonstration [H Ben Amor, D Vogt, M Ewerton, E Berger, B Jung and J Peters, 2014]. Traditional approaches to modeling interactions assume a pre-specified symbolic representation of the available actions. For example, they model interactions
-in terms of commands such as \emph{wait}, \emph{pick-up}, and \emph{place}. Instead of such a top-down approach, we focused on learning responsive behavior in a bottom-up fashion using a trajectory based approach. The key idea behind our approach is that the observation of human-human collaborations can provide rich information specifying how and when to interact
-in a particular situation. For example, by observing how two human workmen collaborate on lifting a heavy box, a robot could use machine learning algorithms to extract an
-interaction model that specifies the states, movements, and situational responses of the involved parties. In turn, such a model can be used by the robot to assist in a similar lifting task. Our approach is as an extension of imitation learning to multi-agent scenarios, in which the behavior and the mutual interplay between two agents is imitated
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=\linewidth]{./images/newoverview.png}
-%\label{fig:subfig2}
- \caption{Illustration of the developed interaction primitives that allows to infer the behavior of the interacting partner.
-}
-\label{fig:interaction_primitives}
-\end{figure}
-
-We further extended the above approach by introducing \emph{Interaction Primitives} in [Ben Amor, H.; Neumann, G.; Kamthe, S.; Kroemer, O.; Peters, J., 2014]. Interaction primitives build on the framework of dynamic motor primitives (DMPs) by maintaining a distribution over the parameters of the DMP. With this distribution, we can learn the inherent correlations of cooperative activities which allow us to infer the behavior of the partner and to participate in the cooperation. A conceptual overview is sketched in Figure \ref{fig:interaction_primitives}. A learned Interaction Primitive can be used by a robot to (1) predict the human's next action in the current context, (2) identify the optimal response, (3) synchronize the movement with the human partner.
-
-In the meantime, demonstration-based learning of "optimal trajectories" and stable controllers has been addressed by UPMC, in particular in \cite{stulp2013} where a general, flexible, and compact representation of parameterizable skills is proposed. This work generalizes the standard Dynamic Motor Primitive formulation in \cite{ijspeert2013} and proposes a novel DMP formulation for parametrized skills, based on additionally passing task parameters to the DMP function approximator. This generalizes previous approaches, in particular those which train and execute parametrized skills with two separate regressions. Learning the function approximator with one regression in the full space of phase and tasks parameters allows for more compact models, and the flexible use of different function approximator implementations such as LWPR and GPR, as we demonstrated on the Meka and iCub humanoids robots.
-
-%!TEX root = ../../secondYearReport.tex
-
-
-\paragraph{Work package 4 progress}
-
-\subparagraph{Improved Models from Real-Time Regression with Latent Contact Type Inference (T4.1)}%(TUD 8.5PM, ??PARTNERS)}
-
-%IIT
-Within T4.1 IIT developed a theoretical framework for estimating whole-body
-dynamics from distributed multimodal sensors \cite{Nori2015}. Considered sensors
-include joint encoders, gyroscopes, accelerometers and force/torque sensors.
-Estimated quantities are position, velocity, acceleration and (internal and
-external) wrenches on all the rigid bodies composing the robot articulated
-chain. The estimation procedure consists of an extended Kalman filter (EKF)
-which gives the a-posteriori estimation given all the available measurements.
-Computational efficiency is obtained by formulating the Kalman filter
-update-step with a sparse Bayesian network. Experiments for validating the
-proposed theoretical framework have been conducted on a leg of the iCub humanoid
-robot. The iCub is an ideal platform for the proposed experiment given its
-distributed force, torque, linear acceleration and angular velocity sensors.
-Results have shown the accuracy and the computational efficiency of the proposed
-method. The theoretical framework has been implemented in an open source
-software (see also Section \ref{sec:T15}).
-
-%TUD
-%LMProMPs and Model-free ProMPs
-TUD extended their probabilistic movement primitive (ProMP) approach in two
-ways. First, a mixture model approach that learns a shared latent structure of
-related tasks from demonstrations was developed. The shared structure is encoded
-by a multi-modal vector that modulates the probabilistic primitives. Both, the
-probabilistic primitives as well as their activations (i.e., the latent
-variable) are learned from demonstrations. In a table tennis ball prediction
-tasks this latent variable modulated the slope and the waviness of the ball
-trajectory. In a Kuka robot arm reaching task, the approach was used to learn
-bi-modal reaching trajectories that avoid an obstacle placed in front of the
-robot. This work is detailed in Deliverable D4.2 and will be presented at the
-IEEE conference on Robotics and Automation in May in Seattle, USA
-\cite{Rueckert_2015}. 
-
-In a second extension of ProMPs, TUD developed a model-free control method that
-can be trained from demonstrations and generates time-varying feedback control
-gains that reproduces the demonstrations. In this approach a joint distribution
-over states, sensory feedback (e.g., measured joint torques or contact forces)
-and controls is learned. In conditioning on the current state the next-state
-control-law can be computed in closed form approximating the true forward
-dynamics through local linearizations given the demonstrations. TUD evalated
-this model-free ProMP method on the humanoid robot iCub in lifting objects. A
-conference paper is currently under review. 
-
-
-\subparagraph{Inferring the Operational Space and Appropriate Controls with Multiple Contacts (T4.2)}%(TUD 4PM, ??PARTNERS)}
+\subsubsection{Inferring the Operational Space and Appropriate Controls with Multiple Contacts}
 
 %TUD
 For controlling high-dimensional robots, most stochastic optimal control
@@ -708,8 +590,8 @@ algorithms use approximations of the system dynamics and of the cost function
 (e.g., using linearizations and Taylor expansions). These approximations are
 typically only locally correct, which might cause instabilities in the greedy
 policy updates, lead to oscillations or the algorithms diverge. To overcome
-these drawbacks, TUD added a regularization term to the cost function that punishes
-large policy update steps in the trajectory optimization procedure. TUD applied
+these drawbacks, we added a regularization term to the cost function that punishes
+large policy update steps in the trajectory optimization procedure. We applied
 this concept to the Approximate Inference Control method (AICO), where the
 resulting algorithm guarantees convergence for uninformative initial solutions
 without complex hand-tuning of learning rates. 
@@ -736,7 +618,39 @@ inferred from desired center of gravity or end effector coordinates. This work w
 the international conference on humanoid robots \cite{Rueckert2014}. 
 Supplemental Matlab demo code is available online at http://www.ausy.tu-darmstadt.de/Team/ElmarRueckert.
 
-\subparagraph{Generalizing and Improving Elementary Tasks with Contacts (T4.3)}%(TUD 6PM, ??PARTNERS)}
+\subsubsection{Generalizing and Improving Elementary Tasks with Contacts}
+
+We aim to generate new skills from data, where elementary skills 
+are acquired by imitation learning and transferred to novel situations using 
+dynamic systems. To do so, we developed a novel representation of 
+movement primitives that can be used for imitation learning from noisy observations.
+Uncertainty of observed trajectories is explicitely modeled and used to generate new skills.
+This movement representation has state-of-the-art capabilities in generalization, 
+coupling between the degrees of freedom of the robot, and moreover, 
+a time varying feedback controller can be derived in closed form. 
+These features are partially illustrated in Figure \ref{fig:promps}.
+More details on this work can be found in \cite{Paraschos_NIPS_2013}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{./images/ProMPs.png}
+%\label{fig:subfig2}
+ \caption{(a)
+Conditioning on different target states. The blue shaded area represents the learned
+trajectory distribution. We condition on different target positions, indicated by the $x$-markers. The
+produced trajectories exactly reach the desired targets while keeping the shape of the demonstrations.
+(b)
+Combination of two ProMPs. The trajectory distributions are indicated by the blue and red
+shaded areas. Both primitives have to reach via-points at different points in time, indicated by
+the $x$-markers. We co-activate both primitives with the same activation factor. The trajectory
+distribution generated by the resulting feedback controller now goes through all four via-points.
+(c)
+Blending of two ProMPs. We smoothly blend from the red primitive to the blue primitive. The
+activation factors are shown in the bottom. The resulting movement (green) first follows the red
+primitive and, subsequently, switches to following the blue primitive.
+}
+\label{fig:promps}
+\end{figure}
 
 The advent of robots in our every day life can only be accomplished with
 reliable mechanisms for movement generation.  Movement Primitives (MP) are a
@@ -749,7 +663,7 @@ high dimensional space of robot movements, generalization capabilities to novel
 situations, temporal modulation of the primitive, sequencing of primitives,
 coupling between the degrees of freedom of the robot, and controllers for real
 time execution. However, no single MP framework exists that offers all these
-properties.  During year two, TUD extended previous results on modeling stochastic movements \cite{Paraschos2013,Paraschos2013a}, where a journal version is currently under review. 
+properties.  We extended previous results on modeling stochastic movements \cite{Paraschos2013,Paraschos2013a}. 
 
 \definecolor{light-gray}{rgb}{0.91,0.9,0.88}
 
@@ -803,17 +717,17 @@ and right angles ($f$).}
 
 \end{figure*}
 
-TUD incorporated all the desirable properties 
-current approaches offer into a single framework and, additionally, TUD 
+We incorporated all the desirable properties 
+current approaches offer into a single framework and, additionally, we 
 introduced new operations on the primitives, such as continuous blending and
 co-activation of multiple primitives.  Most importantly, in this approach, the
 novel co-activation operator is capable of solving multiple tasks concurrently \ref{fig:Robot-Hockey}.
-Furthermore, TUD's approach is capable of reproducing exactly the demonstrated
+Furthermore, our approach is capable of reproducing exactly the demonstrated
 variability of the movement and the coupling between the degrees of freedom of
 the robot.  In this approach, called Probabilistic Movement Primitives (ProMPs) \cite{Paraschos2013,Paraschos2013a},
-TUD derived all operations in closed form. In order to use the ProMPs for online
-feedback control, TUD also derived a stochastic feedback controller that
-reproduces exactly the encoded primitive. TUD evaluated and compared this approach
+we derived all operations in closed form. In order to use the ProMPs for online
+feedback control, we also derived a stochastic feedback controller that
+reproduces exactly the encoded primitive. We evaluated and compared this approach
 on several simulated and real robot scenarios.
 
 Probabilistic movement primitives are a promising approach for learning,
@@ -826,15 +740,15 @@ requirements.  The desired trajectory distribution of the
 primitive is parametrized by a hierarchical Bayesian model with Gaussian distributions. The
 trajectory distribution can be obtained from demonstrations and 
 simultaneously defines a feedback controller which is used for movement
-execution. Currently, TUD is investigating extensions of the ProMPs framework 
+execution. Currently, we are investigating extensions of the ProMPs framework 
 to tasks that involve 
-contacts with the environment (see T4.1). In addition, TUD started to investigate the improvement of elementary skills encoded in ProMPs with 
+contacts with the environment. In addition, we started to investigate the improvement of elementary skills encoded in ProMPs with 
 reinforcement learning, where a conference paper was submitted for review.
 
 
-\subparagraph{Learning the Prioritization of Tasks (T4.4)}%(TUD 3.2PM, INRIA 2PM)}
+\subsubsection{Learning the Prioritization of Tasks}
 
-During year two, UB continued their research on computed torque control leveraging low-gain control. 
+We have been leading research on computed torque control leveraging low-gain control. 
 In computed torque control, robot dynamics are predicted by dynamic models.
 This enables more compliant control, as the gains of the feedback term can be
 lowered, because the task of compensating for robot dynamics is delegated from
@@ -860,34 +774,85 @@ can be achieved, despite the gains being lowered over time, which is illustrated
   \label{fig:meanvariance}
 \end{figure}
 
-\input{./sections/WP4/wp4_progress_T44_UPMC.tex}
+We also studied how to deal with interferences between tasks using
+machine learning tools. Whole-Body Control methods offer the potential to
+execute several simultaneous tasks on highly redundant robots, such as
+humanoids. Unfortunately, task combinations often result in interferences or
+incompatibilities which generate undesirable behaviors. Prioritization schemes
+between tasks, such as strict and soft hierarchies, are typically used to manage
+these interferences but generally require a deal of time consuming and arbitrary
+tuning.
+
+To circumvent theses issues, we presented a novel framework for defining and
+optimizing multiple tasks in order to resolve potential interferences prior to
+task execution. In a first study \cite{lober-HUMANOIDS2014} the tasks are
+parameterized with Dynamical Movement Primitives, whose parameters are optimized
+based on a general compatibility principle, which is independent of the robot's
+topology, tasks or environment. Two test cases on a simulation of a humanoid
+robot are used to demonstrate the successful optimization of initially
+interfering tasks\footnote{A video summarizing the outcome of this work can be viewed
+\href{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/lober_Humanoids2014.mp4}{here}.}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.31\linewidth}
+ \centering
+ \includegraphics[trim = 0cm 4.5cm 0cm 5cm, clip, height=4 cm]{./sections/WP4/pics_UPMC/01_starting}
+ \caption{Constrained Configuration}
+ \label{fig:config}
+\end{subfigure}
+%
+\begin{subfigure}{.31\linewidth}
+ \centering
+ \includegraphics[trim = 0cm 4.5cm 0cm 5cm, clip, height=4 cm]{./sections/WP4/pics_UPMC/02_starting}
+ \caption{Workspace Violation}
+ \label{fig:work}
+\end{subfigure}
+%
+\begin{subfigure}{.31\linewidth}
+ \centering
+ \includegraphics[trim = 0cm 5cm 0cm 5cm, clip, height=4 cm]{./sections/WP4/pics_UPMC/03_starting}
+ \caption{Balance Perturbation}
+ \label{fig:balance}
+\end{subfigure}
+%
+\caption{Three common multi-task incompatibility scenarios. The desired hand
+task trajectories are indicated by the green markers. Medium size spheres
+represent waypoints, and large transparent spheres represent the final waypoints
+or goals.}
+\label{fig:3_scenarios_lober_2015}
+\end{figure}
+
+
+In a second study \cite{lobersubmittedIROS2015}, we studied how task
+variability can be used to modulate task priorities during their execution, to
+temporarily deviate certain tasks in the presence of incompatibilities. A method
+for mapping from task variance to task priority was presented as well as an
+approach for calculating task variance for generated trajectories. The method
+successfully resolved three common task conflict scenarios online illustrated on
+Fig.~\ref{fig:3_scenarios_lober_2015}.
 
 %Valerio's paper on learning activation policies in task controller.
-TUD addressed the problem of learning the temporal profile of soft
+We also addressed the problem of learning the temporal profile of soft
 task priorities and null-space projectors for the multi-task controllers
-developed in WP3. Our preliminary results have been submitted to a robotics
-conference\footnote{Modugno, V.; Neumann, G.; Rueckert, E.; Oriolo, G.; Peters,
-J.; Ivaldi, S. \textit{Learning soft task prioirities and null-space projectors
-for motion planning of redundant manipulators}. Submitted to IROS 2015.}.
+developed in \cite{Liu2015}..
 
-The first controller of WP3, \textit{Prioritized Task-Space Inverse Dynamics},
+The \textit{Prioritized Task-Space Inverse Dynamics} controller from \cite{DelPrete-2014-ID267}
 is based on \textit{strict task hierarchies}, where a hierarchical ordering of
 the tasks is set, such that critical tasks (or tasks that are considered as more
 important) are fulfilled with higher priorities, and the low-priority tasks are
-solved in the null-space of the higher priority tasks
-\cite{DelPrete-2014-ID267}. The strict control approach requires the
+solved in the null-space of the higher priority tasks. The strict control approach requires the
 pre-specification of the task hierarchy. However, in many contexts it is
 difficult to organize the tasks in a stack and define their relative importance
 in forms of priorities. When priorities are strict, a higher task can completely
 block lower tasks, which can result in movements that are not satisfactory for
 the robot mission (e.g., its ``global'' task). 
 
-The second controller of WP3 is based on \textit{soft task hierarchies}, where
-the solution is typically given by a combination of weighted tasks
-\cite{Salini-2011-ID348}. The importance or ``soft priority'' of each individual
+In \cite{Salini-2011-ID348}, a second controller is based on \textit{soft task hierarchies}, where
+the solution is typically given by a combination of weighted tasks. The importance or ``soft priority'' of each individual
 task is represented by a scalar weight. By tuning the vector of scalar weights,
-evolving in time, the global robot behavior can be optimized. Within WP3, Liu et
-al. \cite{liu_ICRA2015} propose a generalized projector (GHC) that handles
+evolving in time, the global robot behavior can be optimized. Liu et
+al. \cite{liu2015} propose a generalized projector (GHC) that handles
 strict and non-strict priorities with smooth transitions when tasks priorities
 are swapped. They show that adapting these weights may result in a seamless
 transition between tasks (i.e., reaching for an object, staying close to a
@@ -966,7 +931,7 @@ Figure~\ref{fig:activation_policy}.
 % \end{figure}
 
 We then compare the performance of our controller with the state-of-the-art
-method GHC proposed by Liu et al. \cite{liu_ICRA2015} (WP3). We consider the
+method GHC proposed by Liu et al. \cite{liu2015}. We consider the
 following experimental scenario: a 7-DOF KUKA Light Weight Robot arm, starting
 from a vertical position, must reach a desired point with its end-effector,
 while avoiding to collide with a table, represented by a surface parallel to the
@@ -996,6 +961,9 @@ I GUESS THE RECENT VIDEOS CORRESPONDING TO DEMOS WOULD BE PLACED HERE.
 \caption{The picture shows the iCub while performing compliant single foot balancing. Details on the controller can be found in \cite{Nori2015a}. A video of the task is available on youtube\protect\footnotemark.}
 \label{fig:footBalancing}
 \end{figure}
+
+\section{Acknowledgement}
+This paper was supported by the FP7 EU projects CoDyCo (No. 600716 ICT 2011.2.1 Cognitive Systems and Robotics).
 
 \footnotetext{\url{https://www.youtube.com/watch?v=SYVCbzGsBF4}.}
 
