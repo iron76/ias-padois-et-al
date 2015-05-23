@@ -39,6 +39,7 @@
 
 %% The amssymb package provides various useful mathematical symbols
 \usepackage{amssymb}
+\usepackage{mathtools, amssymb}
 \usepackage{xspace}
 \usepackage{verbatim}
 \usepackage[usenames]{color}
@@ -54,6 +55,11 @@
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
 % \usepackage[pdftex,dvips]{graphicx}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}	% matrix
+\newcommand{\Rv}[1]{{\mathbb{R}^{#1}}}				% set of real-valued vectors
+\newcommand{\R}[2]{{\mathbb{R}^{#1\times #2}}}		% set of real-valued matrices
 
 
 %% The amsthm package provides extended theorem environments
@@ -982,9 +988,280 @@ satisfies the constraints, while only 75\% of the solutions of GHC+learning are
 acceptable. Furthermore, the final best solution found by RUF+CMA-ES outperforms
 the one of GHC+CMA-ES, as shown in Figure~\ref{fig:activation_policy} (c).
 
+This paper presents the control framework implemented on the humanoid robot iCub for one foot balancing and motion control.
+This framework ensures a degree of compliance for the multi-body system, which allows for safe human robot interaction.
+%  and integration of all the building blocks composing a
+% system for balance and motion control of a humanoid robot. The system includes the low-level joint-torque control,
+% the task-space inverse-dynamics control, the task planner and the estimation of contact forces and joint torques.
+% Even though in recent years other similar systems have been presented \cite{Ott2011, Herzoga},
+% the originality of our contribution lies i) in the specificities of our test platform and ii) in a number
+% of design choices that traded off simplicity of implementation for performances of the control system.
+% In particular:
+%  \begin{itemize}
+% \item differently from the other robots, iCub can localize and estimate contact forces on its whole body thanks to its distributed tactile sensors
+% \item similarly to the \emph{DLR-Biped} \cite{Ott2011}, iCub is actuated with DC motors and harmonic drives, but we chose to neglect the gear-box flexibility, which simplified the motor-identification procedure and the low-level torque controller
+% \item differently from the above-mentioned platforms, iCub is not equipped with joint-torque sensors, but we designed a method that exploits its internal 6-axis force/torque sensors to estimate the joint torques
+% \item all our control loops run at 100 Hz, which is (at least) 10 times slower with respect to \cite{Ott2011, Herzoga}
+% \end{itemize}
+% We believe that further investigation will be necessary to thoroughly understand all the consequences of our hardware/software design choices.
+% Nonetheless, these peculiarities make the presented system unique, % in terms of both capabilities and simplicity of implementation,
+% and for this reason we think it is important to share our results with the robotics community.
 
 
+%The present paper discusses the theory and implementation of a controller for whole-body stability on
+%multiple rigid noncoplanar contacts. The stability problem is reformulated as a contact-force control problem,
+%which is solved exploiting recent results by \cite{DelPrete2014}. The theoretical framework is
+%implemented on the iCub humanoid, an ideal robot for the specific implementation, \replaced[id=jeg, remark='in consideration of' is mostly used to express gratitude. Equivalent to  'in return for']{if you take into consideration its}{in consideration of its}
+%whole-body distributed force and tactile sensing. The specificity of the platform calls for a number of custom
+%choices\added[id=jeg, remark=Is this 'specificity' recalled as a disadvantage or negative aspect of the proposed controller anywhere in the paper?]{} discussed throughout the paper, which is organized as follows.
 
+\section{Validation scenarios}
+
+This section presents the control framework implemented on the humanoid robot iCub for one foot balancing and motion control. This framework ensures a degree of compliance for the multi-body system, which allows for safe human robot interaction.
+
+\subsection{System modelling}
+The system dynamics are characterized by the following  differential equations:
+
+\begin{eqnarray}\label{eq:dyn}
+\label{eq:dynNoContacts}
+M(q) \dot{\nu} + h(q, \nu) - J^\top(q) f  &=&
+{S} \tau \mbox{,}\\
+\label{eq:contact}
+ J(q) \dot{\nu} + \dot{J}(q, \nu) \nu &=& 0 \mbox{,}
+ \end{eqnarray}
+
+\noindent
+where $q \in SE(3) \times \Rv{n}$ represents the configuration of the free floating system,
+ which is given by the
+pose of a base-frame and $n$ generalized coordinates $q_j$ characterizing the joint angles.
+% (includes both $q_j \in \Rv{n}$ and the
+% floating-base
+The vector $\nu \in \Rv{n+6}$ represents the robot velocity
+(it includes both $\dot{q}_j \in \Rv{n}$ and the linear and angular velocity of the base-frame $v_b \in \Rv{6}$), the system acceleration is denoted as $\dot \nu$,
+the derivative of $\nu$, the control input
+$\tau \in \Rv{n}$ is the vector of joint torques, $M \in \R{(n+6)}{(n+6)}$ is the mass matrix, $h \in \Rv{n+6}$ contains both
+gravitational and Coriolis terms, $S \in \R{n}{(n+6)} := (0_{n\times 6}, I_n)^\top$ is the matrix selecting the actuated degrees of freedom,
+$f \in \Rv{6}$ is the external, contact wrench, and $J \in \R{6}{(n+6)}$ is
+the contact Jacobian.
+
+
+\subsection{Problem statement}
+
+The control objective is the asymptotic stabilization of a desired centroidal dynamics \cite{Orin2013}. Let $H$
+denote the centroidal momentum of the robot. Then, the time derivative of $H$ is equal to the summation of the external wrenches acting on the multi-body system. When the robot stands on one foot and the centroidal momentum is expressed with respect to the center of mass, one has
+
+\begin{eqnarray} 
+    {\dot H}  =   X f + mg 
+     = \begin{pmatrix} m \ddot{x} \\ \dot{H}_\omega  \end{pmatrix} \label{eq:constraintsSi}
+\end{eqnarray}
+where $m$ is the mass of the robot, $g \in \mathbb{R}^6$ is the gravitational acceleration, $\ddot{x} \in \mathbb{R}^3 $ 
+is the acceleration of the center of mass, $H_\omega \in \mathbb{R}^3$ is the \emph{angular momentum} of the robot, and the matrix $X$ maps the wrench acting on the left foot  with respect to the center of mass.
+
+The control objective is to find a control law for the inputs $\tau$ such that $x \rightarrow x(0)$ and $H_\omega \rightarrow 0$. This choice is sufficient for balancing purposes. Also, while achieving this control objective, the system shall have a degree of compliance.
+
+\section{The control strategy}
+The control strategy is composed of two steps. We first choose the external force $f$ such that $x \rightarrow x(0)$ and $H_\omega \rightarrow 0$. Then, we generate this force through the internal torques. Since iCub possesses more than six degrees-of-freedom, which are necessary to generate the contact force $f$, we choose the remaining control inputs so that to have compliance at the joint level.
+
+\subsection{The choice of the contact force}
+
+Being the matrix $X$ invertible, the contact force $f$ achieving the control objective may be chosen as follows:
+
+\begin{eqnarray} 
+    \label{fd}
+   f = -X^{-1}\left[k_d H + k_p\begin{pmatrix} x-x(0) \\ 0_{3\times1}  \end{pmatrix} + mg\right], 
+\end{eqnarray}
+ with $k_d$ and $k_p$ two positive constants.
+ 
+ In order to keep the foot on the ground, the above wrench must satisfy some constraints, e.g., the contact force
+ must belong to the associated friction cones. In general, the contact constraints can be represented by inequalities of the 
+ form $Cf < d$, with the matrix $C$ and the vector $d$ properly chosen. Then, we choose the contact wrench  as fallows:
+
+\begin{subequations} \label{eq:TSID}
+\begin{align}
+\label{eq:torquesTSID}
+  f = & \argmin_{  \xi \in \mathbb{R}^6} \|   \xi -   f_d\|^2 \\
+\label{eq:dynTSID}
+& \mbox{s.t.}  \quad C\xi < d, 
+%\label{eq:motionTSID}
+% J_i \ddot{  q} + \dot{J}_i \dot{  q} & = \ddot {  x}_i^*, \qquad i = 1, \dots, N -1
+\end{align}
+\end{subequations}
+with the desired wrench $f_d$ given by \eqref{fd}.
+
+%
+% \begin{eqnarray}
+%     {\dot H}  & = &   { X}^*_{lf} f + mg = \begin{pmatrix} m \ddot{x} \\ \dot{H}_\omega  \end{pmatrix} \label{eq:constraintsSi}
+%     % A & = & \begin{bmatrix} ^{com} { X}^*_{rf} & ^{com} { X}^*_{lf} \end{bmatrix}, \notag
+% \end{eqnarray}
+%
+% Let us briefly recall how the force-control problem is solved in the Task Space
+% Inverse Dynamics (TSID) framework
+% proposed by \cite{delPrete2013} in the context of free floating robots.
+% The framework computes the
+% joint torques to match as close as possible a desired vector of forces at the contacts \eqref{eq:torquesTSID}
+% while being compatible with the system dynamics \eqref{eq:dynTSID} and contact constraints
+% \eqref{eq:contactTSID}:
+%
+% \begin{subequations} \label{eq:TSID}
+% \begin{align}
+% \label{eq:torquesTSID}
+%   {\tau}^* = & \argmin_{  \tau \in \mathbb{R}^n} \|   f -   f^*\|^2 \\
+% \label{eq:dynTSID}
+% & \mbox{s.t.}  \quad M \dot{ \nu} + h - J^\top   f = S   \tau \\
+% \label{eq:contactTSID}
+% & \quad \quad J \dot{ \nu} + \dot{J}_c \nu  = 0
+% %\label{eq:motionTSID}
+% % J_i \ddot{  q} + \dot{J}_i \dot{  q} & = \ddot {  x}_i^*, \qquad i = 1, \dots, N -1
+% \end{align}
+% \end{subequations}
+% \noindent
+% where $f^* \in \Rv{k}$ is the desired value for the contact forces.
+% %${  x}^*_i (q)$ is  is the desired value for some kinematics variables ${  x}_i (q)$ and $J_i = \partial x_i / \partial q$ is the associated Jacobian.
+% Then we can exploit the null space of the force task to perform lower priority motion tasks.
+% These tasks (indexed with $i$) are all expressed as the problem of tracking a given reference acceleration $\dot {\nu}_i^*$ for a
+% variable ${x}_i$ differentially linked to $q$ by the Jacobian $J_i$.
+% We impose that the force task has maximum priority in the task hierarchy.
+% The final solution, i.e. the torques to be applied to the robot, are obtained by recursively solving a minimization problem similar to (\ref{eq:TSID}) in the null space of all the tasks with higher priorities.
+% Assuming that the force task has maximum priority the solution is:
+% \begin{equation} \label{eq:hyb_dyn}
+%   \tau^{*} = -(J\bar{S})^\top   f^* + N_j^{-1} {\dot{v}}_1^* + \bar{S}^\top n,
+% \end{equation}
+% where $N_j^{-1} = M_j - M_{bj} M_j^{-1} M_{bj}^\top$, $\bar S = \mat{-M_{bj}^\top M_b^{-1} & I}^\top $ and the term ${\dot{v}}_1^*$ is computed solving the following recursion for $i =N$, $\dots$, $1$:
+% \begin{equation}
+% \begin{split}
+% \dot{v}_i =& \dot{v}_{i+1} + (J_i \bar{S} N_{p(i)})^\dagger (\ddot{  x}_i^*-\dot{J}_i v + J_i (U^\top M_b^{-1} (h_b - J_{cb}^\top f) - \bar{S} \dot{v}_{i+1}))\\
+% N_{p(i)} =& N_{p(i+1)} - (J_{i+1} \bar{S} N_{p(i+1)})^\dagger J_{i+1} \bar{S} N_{p(i+1)}, \\
+% %N_{p(i)} =& I - \sum_{j=i+1}^{N}(J_j \bar{S} N_{p(j)})^+ J_j \bar{S} N_{p(j)},
+% \end{split}
+% \end{equation}
+% where $U \in \mathbb{R}^{6 \times (n+6)}$ is the matrix selecting the floating-base variables, and the algorithm is initialized setting $\dot{v}_{N+1} = 0$, \mbox{$N_{p(N)}=I$}, $J_N = J$ and $\ddot{ x}_N = 0$.
+% The implementation of this controller exploits the fact that we can compute \eqref{eq:hyb_dyn} with an efficient hybrid-dynamics algorithm.
+
+\subsection{The choice of the joint torques}
+The control input $\tau$ must generate the force $f$. The relationship between the contact wrench and the joint torques can be obtained by using the constraint equation along with the free-floating dynamics, i.e. Eq. \eqref{eq:dyn}.
+One can show that the torques generating $f$ are given by the summation of two terms, i.e.,
+\begin{eqnarray}
+        \label{tau}
+        \tau = \tau_f + N \tau_0,
+\end{eqnarray}
+where $\tau_f $ ensures $f = f_d$, the matrix $N \in \mathbb{R}^{n\times n}$ is the null space projector of 
+$JM^{-1}S$,
+and $\tau_0$ is a vector that can be chosen at will. To obtain compliance at joint level, we choose $\tau_0$ similar to 
+a gravity and external force compensation, plus a term of the form \[ -k(q_j - q_d),\]
+which ensures  compliance at joint level.
+
+
+% The control framework described in the previous section can be applied for a balancing task, while retaining the possibility of interaction with the environment.
+% Instantaneous values for interaction forces at feet are computed to
+% follow a prescribed center-of-mass trajectory ($x_{com}^d$) and to reduce angular momentum\footnote{Quantities are defined with a notation similar to \cite{Featherstone2008}}. A reference value  $\dot H_{com}^*$ for the total rate of change of spatial momentum (expressed at the center of mass) is computed as:
+%
+% \begin{eqnarray} \label{eq:hRef}
+% {\dot H}^* (t) = {\dot H}_{com}^d (t) -  K_d^{h} \tilde{H}_{com} - \begin{bmatrix} K_p^{com} \left( \tilde{x}_{com} \right)\\ 0_{3\times1}  \end{bmatrix}
+% \end{eqnarray}
+%
+% \noindent
+% where $K_d^{h}$, $K_p^{com}$ are suitably defined gain matrices, $\tilde{(\cdot)}$ denotes the error with respect to the desired quantity, $H_{com}$  and $H_{com}^d = [m \dot{x}_{com}^{d\top} , 0_{1\times3}]^\top$ is the spatial momentum around the center of mass and its desired value, $x_{com}$ is the center-of-mass cartesian position, $x^d_{com}$ its desired value and $m$ is the total mass of the robot.
+% The relation between external forces and ${\dot H_{com}}$ is given by the following equation:
+% % At this point $f^*$ can be computed from ${\dot H_{com}}^*$
+% % considering that the time derivative of the momentum equals the resultant of forces and torques if all
+% % quantities are computed with respect to the center of mass:
+% \begin{eqnarray}
+%     {\dot H_{com}}  & = &   A f + f_g \label{eq:constraintsSi}\\
+%     A & = & \begin{bmatrix} ^{com} { X}^*_{rf} & ^{com} { X}^*_{lf} \end{bmatrix}, \notag
+% \end{eqnarray}
+% where $f_g$ is the gravitational force and where the matrices $^{com} { X}^*_{(\cdot)}$  express the spatial forces acting on the left foot ($lf$) and right foot ($rf$) with respect to the center of mass.
+% In literature these equations (derived from the Newton-Euler equations) have been presented in detail by
+% \cite{Orin2013} under the name of \emph{centroidal dynamics}.
+%
+% Finally, the desired force $f^*$ can be computed as
+%
+% \begin{equation} \label{eq:minF}
+%  f^* = \argmin_{f} \|  f  - f_0 \|^2  \qquad \mbox{s.t.} \qquad A f + f_g = {\dot H_{com}}^*,
+% \end{equation}
+% The solution of this optimization is given by:
+% \begin{equation}
+%  f^* = A^{\dagger} \left( {\dot H_{com}}^* - f_g \right) + (I - A^{\dagger} A)  f_0 ,
+% \end{equation}
+% \noindent
+% where $f_0$ can be chosen to satisfy additional constraints on the forces.
+%
+% We also added, at the lowest priority level, a postural task. Reference accelerations for the joint variables are chosen as:
+%
+% \begin{equation} \label{eq:qRef}
+% {\ddot q_j}^* (t) = {\ddot q_j}^d (t) - K_d^{q} \left( {\dot q_j} - {\dot q_j}^d (t) \right) - K_p^{q} \left( {q_j} - { q_j}^d (t) \right),
+% \end{equation}
+% where $K_p^{q}$ and $K_d^{q}$ are arbitrary positive-definite matrices
+% This task acts in the null space of the task force as specified in Eq. (\ref{eq:TSID}).
+% In the general case more tasks can be added between the highest priority one (force task) and the lowest priority one (postural task).
+
+\section{Experiment}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{images/icubPicture} \\
+\caption{Screenshot of the video showing the full experiment. iCub balances by controlling the foot wrench
+} \label{fig:snapshot}
+\end{figure}
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.8 \textwidth]{images/twoSupportsSignals.pdf} \\
+% \caption{Results of the double support experiment on planar contacts (left and right feet). The picture shows
+% the time behavior of forces (top) and center of mass position (bottom) on the sagittal (blue) and transverse
+% (green) axis. It is worth \replaced[id=jeg]{noting}{noticing} that forces should be proportional to center of mass accelerations and this
+% is visible in the plot considering that accelerations are \replaced[id=jeg]{sinusoidal}{sinusoid} in counter phase with positions.
+% \adnote{Add desired CoM trajectory and desired forces?} Rapid variations of the contact forces at the time $t \approx 2$, i.e. starting time, are due to
+% the activation of the torque control.}
+% \label{fig:twoSupportsForces}
+% \end{figure}
+%
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.4 \textwidth]{images/twoSupports.pdf}
+% \includegraphics[width=0.4 \textwidth]{images/twoSupportsFRI.pdf}
+% \caption{Results of the double support experiment on planar contacts (left and right feet). The left picture
+% shows in three dimensions the feet contacts, the feet center of pressures, the forces at the feet and at the
+% the center of mass during three instants: at two extrema of the sinusoid (red and blue) and in the middle of
+% the sinusoid (green). Remarkably forces are maximum at the extrema when also accelerations are
+% maximal. The right picture shows a close-up of of the feet with the trajectory of the center of pressure, an
+% ellipse representing a Gaussian fit of the data points and three points corresponding to the position of the
+% centers of pressure when at the two extrema of the sinusoid (red and blue) and in the middle of the sinusoid
+% (green). \adnote{I found this figure hard to interpret, even after reading the caption, the RGB arrows/points are hard to see.}} \label{fig:twoSupports}
+% \end{figure}
+%
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.8 \textwidth]{images/forces.pdf} \\
+% \caption{Results of the double support experiment on four noncoplanar contacts (both feet and
+% arms). The plots represent the evolution of the contact forces at the left (top) and right (bottom) arms when
+% contact is established.} \label{fig:fourSupportsForces}
+% \end{figure}
+%
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.4 \textwidth]{images/fourSupports.pdf}
+% \includegraphics[width=0.4 \textwidth]{images/fourSupportsFRI.pdf}
+% \caption{Results of the double-support experiment on four noncoplanar contacts (both feet and
+% arms). The left picture gives a three-dimensional view of the foot center-of-pressure positions together with
+% the arm contact forces. Forces are represented in a color scale that goes from black (contact establishment)
+% to blue (steady state) \adnote{I found the forces hard to interpret so I'd remove them since they are already in the previous plot}.
+% The right picture gives a closeup on the foot center-of-pressure positions with an
+% ellipse that represents the Gaussian approximation of its distribution. \adnote{Overall this figure is hard to read, so I suggest replacing
+% it with a plot of the CoP.}} \label{fig:fourSupports}
+% \end{figure}
+
+We implemented the proposed control strategy on the iCub platform. The control framework is composed of two
+loops. The inner loop is in charge of stabilizing \emph{desired} joint torques, while the outer loop is governed by 
+Eq. \eqref{tau}. Both loops runs at the same frequency of 100 Hz. 
+
+The experiment consists in two phases. In the first phase, we change the desired $q_d$ in order to generate 
+\emph{internal} motions, which do not perturb the stability of the robot momentum thanks to the prioritization of tasks
+described in the previous section. In the second phase, we apply external perturbations by interacting with the robot. This 
+interaction  results to be safe thanks to the compliance at joint level.  
+A video of the experiment
+\footnote{\url{https://www.youtube.com/watch?v=VrPBSSQEr3A}.} is available for the interested reader.
+
+For more detailed information and description of the system architecture (comprising torque and forces estimation and low level torque control) see \cite{noriFrontiers2015}.
 
 \section{Conclusions}
 
