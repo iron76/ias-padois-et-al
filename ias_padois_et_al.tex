@@ -152,7 +152,7 @@ Physical interaction has been studied in robotics, extensively under the umbrell
 
 Within this context one of the major challenges of robotic research is to advance the current control and cognitive understanding about robust, goal-directed whole-body motion execution with multiple contacts. Remarkably, focus should be posed on complex systems, such as humans and humanoids. In a crescendo of complexity, as illustrated in the following figure, the current state-of-the-art in these domains (state-of-art 1 and 2) should be advanced to address more complex scenarios (challenges 1 and 2).
 
-\paragraph{State-of-art 1: balancing with multiple rigid contacts} The robot is standing and balancing with its hands supported by a rigid table in front of its body. However, the table is too fragile, and unexpectedly breaks. A contact state change is sensed, and the robot's control architecture automatically adjusts posture control parameters to maintain balance in light of the reduced support. The unexpected breaking of contact makes it more challenging.
+\paragraph{State-of-art 1: balancing with multiple rigid contacts} The robot is standing and balancing with its hands supported by a rigid table in front of its body. However, the table is unstable, and unexpectedly the contact with the table breaks. A contact state change is sensed, and the robot's control architecture automatically adjusts posture control parameters to maintain balance in light of the reduced support. The unexpected breaking of contact makes it more challenging.
 
 \paragraph{State-of-art 2: goal directed actions involving contacts} The robot is standing with its hands at its side, and intends to reach for an object on a table in front.  The robot recognises that the distance is sufficiently far away, and the task cannot be achieved without compromising balance.  The robot decides to initiate a new contact with its left hand on the table, providing sufficient support for reaching the object with its right hand.
 
@@ -160,12 +160,14 @@ Within this context one of the major challenges of robotic research is to advanc
 
 \paragraph{Challenge 2: human assistive contacts} The robot is seated in a chair, and a person comes to assist the robot to stand. He/she grabs both hands of the robot and starts pulling upwards.  The robot senses the new contact, and recognising from the interaction force that it is an external agent, allows its arms to be compliant.  When the force becomes sufficient to enable standing, the robot recognises the intended action and stiffens its arms while pushing its legs to rise from the chair. Finally once standing, but still in contact with the human, the robot returns compliance to its arms to allow for safe interaction while retaining overall control of its posture.
 
-\begin{figure}[!ht]
+\begin{figure}
 \centering
 \includegraphics[width=1.0\linewidth]{./images/scenarios.png}
 %\label{fig:subfig2}
 \label{fig:scenarios}
 \end{figure}
+
+\subsection {Compliance in whole-body motion}
 
 Present day robots are still far from the human capabilities in exploiting predictable events and in coping with uncertainty. The gap between humans and robots is particularly apparent when in tasks involving unstructured physical interaction with the environment or other agents. Recent behavioural experiments yielded a new perspective on modelling the way humans deal with both predictable and unpredictable motor control tasks. In early experiments, it has been shown \cite{Shadmehr1994a} that humans learn and adapt internal dynamical models of their own arm in interaction with the environment. Such internal models appear to be crucial in predicting how muscle activations produce hand movements and therefore may play an essential predictive role in movement planning. However, Burdet et al. \cite{Burdet2001} have shown that when prediction is not a viable strategy, humans can rely on arm compliance regulation (by means of muscle co-activation) to cope with the unpredictability that naturally arises from feedback delays when performing arm-reaching movements in unstable environments. Basic research and robotics technology are ready to extend such insights from single limb movements to whole-body interaction and the validation of these models appears feasible. In contrast to manipulation scenarios with static base robot systems, dynamic whole-body interaction concerns the analysis of phenomena at a higher scale (bigger interaction forces, bigger muscle activations, etc.).  Whole-body compliance regulation with force/impedance control is not only favoured by current theoretical progress and available technologies, but may actually be ready for widespread use instead of being limited to just a few prototypes.
 
@@ -177,7 +179,7 @@ Present day robots are still far from the human capabilities in exploiting predi
 \label{fig:classification1}
 \end{figure}
 
-\subsection{Roadmap beyond state-of-the-art}
+\paragraph{Roadmap beyond state-of-the-art}
 
 With reference to Figure~\ref{fig:classification1} and following, we propose a classification that relies on the well known concept of compliance (or the inverse concept of stiffness and more genraly impedance), to be understood as the force-displacement characteristic of a contact. Interaction scenarios can be classified by quantitatively measuring two essential components of contacts: external and internal compliance (internal here refers to the agent or ``the self''). The first scenarios classification (Figure~\ref{fig:classification1}) is based on the external-compliance; it includes scenarios that involve non-compliant (rigid) external contacts and scenarios with compliant external contacts. This second category is extremely wide in consideration of the multitude of possible compliant behaviours that can be experienced: from the linear force-displacement characteristic of a linear spring to the complex non-linear characteristic of a pillow. Scenarios within this category practically overlap with the first category but rigid contacts are replaced by non-rigid contacts. In these two categories the agent (or ``the self'', represented with a human silhouette) is always interacting with inanimate objects (the external contacts: a chair, a sofa, the floor, etc.). In the last category, ``the self'' and ``the other'' are both humans. In these scenarios the external-compliance is not a well-defined relationship between force and displacement but depends on the active intention of ``the other''.
 External-compliance is only one side of the interaction, and the agent has limited control over it. The other side of the interaction is what we call the ``self'' (internal) compliance, which is instead fully under control of the cognitive agent. Self-compliance needs to be adapted to the environment compliance and the ability to actively regulate the internal compliance has been only recently implemented on multi-degrees-of-freedom robots. The self-compliance regulation represents the pro-active and cognitive component of the interaction and therefore gives the robot an enhanced degree of autonomy to be exploited in handling situations not anticipated at design time. In this sense, the self-compliance level and actuation range can be used to classify different scenarios as shown by Figure~\ref{fig:classification2}. At the very first level of this classification we consider scenarios that do not require significant self-compliance regulation as they typically involve dynamically stable situations. Such situations involve for example dynamically stable tasks, which substantially require direct control of stable postures. The second level of the classification includes tasks that require a certain level of active compliance either to stabilise unstable systems (e.g. balancing) or to compensate for unpredictable interaction characteristics (e.g. standing hand in hand with another agent). Finally at the highest level of this classification we consider highly complex tasks characterised by strong requirements in terms of ``self''-compliance planning and regulation.
@@ -213,12 +215,12 @@ Finally, several open-source software libraries have been developed in the last 
 \subsection{Human motor control state-of-the-art}
 Human whole-body motion control has been studied within tasks such as reaching on a supporting surface and sit-to-stand. These movements involve coordination of multiple joints, significant shift of the centre of mass, and control of equilibrium, either in static or dynamic conditions. These are skills learnt early in human childhood but also studied extensively in the context of motor disability, e.g. after neurological insults like stroke, or in the elderly with reduced muscle power, joint flexibility and sensory loss. However, almost nothing is yet known about when healthy subjects choose to make use of contacts with support surfaces. It has been shown that in standing posture, this contact provides augmented sensory information reducing sway \cite{Johannsen2012}, and how in some circumstances, non-weight bearing but informative ``light-touch'' between two standing subjects can cause coupling that leads to increased sway, emphasising that knowledge about the stability and compliance of the contact surface is vital.
 
-\subsubsection{Reach using supports}
+\paragraph{Reach using supports}
 Human reaching with arm support has not been extensively studied. There is almost no literature on the issue of how humans use one hand to extend their reach space. For example, to lean forwards requires a shift of the trunk and a shift of the centre of mass \cite{Huang2011}. At some point it becomes advantageous to use a supporting surface, allowing a reduction in anticipatory postural adjustments and a simplified control strategy \cite{Slijper2000}. But the decisions about when to implement support using one arm, which will depend on the availability, reliability and compliance of a support surface are almost unstudied \cite{Krishnamoorthy2004}.
 
-\subsubsection{Sit-to-stand} The postural adjustments that contribute to a sit-to-stand action are well documented. The action requires a shift of centre of mass, development of momentum, and precisely timed hip and knee extension, combining with maintaining stability with ankle control. As motor ability lessens, e.g. in the elderly, compensatory foot placement with increased momentum generation using hip flexion and arm movement is often employed \cite{Janssen2002}. Support from the chair arm or from a cane \cite{Leung2009}  increases stability in the forward axis. Again, decisions about when the support surface would be used, depending on its stability and compliance, are unstudied. The effects of unstable foot support in the sit-to-stand action are studied in \cite{Huang2011} the authors suggests a clear trade-off between support surface stability and manoeuvrability, and argue that adapting to the added uncertainty could help individuals become more manoeuvrable. Finally, there is little work on how the sit-to-stand action changes with elastic support - this has been studied in locomotion and jumping \cite{Arampatzis2001}, but not in inter-actions with support surfaces.
+\paragraph{Sit-to-stand} The postural adjustments that contribute to a sit-to-stand action are well documented. The action requires a shift of centre of mass, development of momentum, and precisely timed hip and knee extension, combining with maintaining stability with ankle control. As motor ability lessens, e.g. in the elderly, compensatory foot placement with increased momentum generation using hip flexion and arm movement is often employed \cite{Janssen2002}. Support from the chair arm or from a cane \cite{Leung2009}  increases stability in the forward axis. Again, decisions about when the support surface would be used, depending on its stability and compliance, are unstudied. The effects of unstable foot support in the sit-to-stand action are studied in \cite{Huang2011} the authors suggests a clear trade-off between support surface stability and manoeuvrability, and argue that adapting to the added uncertainty could help individuals become more manoeuvrable. Finally, there is little work on how the sit-to-stand action changes with elastic support - this has been studied in locomotion and jumping \cite{Arampatzis2001}, but not in inter-actions with support surfaces.
 
-\subsubsection{Dimensionality reduction}
+\paragraph{Dimensionality reduction}
 Complex multi-joint movements call for control strategies that simplify and reduce degrees of freedom. There are various competing theories of how this can be achieved \cite{Latash2010}. Perhaps most relevant is the uncontrolled manifold hypothesis \cite{Scholz1999} that demonstrates that it is highly effective to allow some parameters to be uncontrolled, if task irrelevant, and to control only a fewer task relevant parameters. In \cite{Scholz1999} Scholz \& Schoner applied this to the sit-to-stand task, and show that the centre of mass in the forward axis is well controlled, head and hand position are less controlled, and vertical head position appears little controlled. How these behaviours change with support is an open question. Equally important is the issue of how high dimensionality whole body motion of human models can be reduced to extract principles of action applicable to robots with different geometries. These are implemented by muscle and joint synergies that reduce the functional degrees of freedom during a given action. There has been very effective use of principal or independent components analyses to capture such human whole body movement and reduce dimensionality (e.g. as in \cite{Forner-Cordero2005} ). Recent developments include extracting functional components, which treat joint-kinematics data as functions instead of as a series of independent samples, and are comparable across groups of subjects \cite{Coffey2011}.
 
 \subsection{Robot control state-of-the-art}
@@ -227,13 +229,13 @@ In complex scenarios, when the robot and the environment are assumed to be perfe
 \subsection{Learning}
 Real-world environments are often hard to capture perfectly with physical models. The uncertainty in model predictions is important during controlled physical contacts between a (humanoid) robot system and its environment. Large errors either in the environmental model or in the task will lead to drastic failures and therefore need to be limited as much as possible by model adaptation. Human-inhabited worlds will never allow perfect modelling and instead require that the system generalises the tasks in such a manner that they work in a wide variety of different uncertain scenarios where there is contact between robots and either humans or physical objects. Machine learning approaches are therefore needed. Particularly in whole-body motion they are necessary for the successful implementation of the control architecture, and its implementation and application to the real-worlds scenarios. However, off-the-shelf machine learning methods are concerned with static data sets and require massive amount of computations, often rendering real-time learning in-feasible. To date, a variety of robot learning approaches have been suggested. The most important being model learning, operational space control learning, learning of elementary tasks and hierarchical combinations of tasks, which are briefly evaluated hereinafter.
 
-\subsubsection{Model learning}
+\paragraph{Model learning}
  High model accuracy and constant model adaptation may be key for low torque interaction during contact. Models of the robot dynamics have been learned by real-time regression, e.g., locally weighted projection regression \cite{Schaal2002a} and local Gaussian process regression \cite{Nguyen-tuong2010a}. Nevertheless, if any of these approaches would be given the data from a robot in contact with the environment, it would fit the model to this particular case, as the contact forces would just be treated as an additional nonlinearity. As a result, the model will not generalise to new contact models and instead it would be necessary to learn a new model for each type of contact.
 
-\subsubsection{Operational space control learning}
+\paragraph{Operational space control learning}
 Control in operational space has been approached both as a direct policy learning problem \cite{Peters2008a} as well as an indirect learning problem via forward models \cite{Salaun2010}. Here, the problem may be even more drastic as changing the contact formulation will alter the problem in its essence. As a result, an operational space control law may not transfer at all but rather become highly problematic under new circumstances. 
 
-\subsubsection{Learning of elementary tasks and hierarchical combinations of tasks}
+\paragraph{Learning of elementary tasks and hierarchical combinations of tasks}
 While learning of contact-free elementary tasks by the combination of imitation learning and policy search \cite{Abbeel2005} \cite{Kober2010} is a well-explored topic, no general approaches to date can tackle the exact same problem and allow for different contact combination. Furthermore, learning of hierarchical elementary task combinations is still in its infancy. Several interesting approaches have been suggested \cite{Stulp2011a} \cite{Mulling2010} \cite{Muico2011} \cite{Daniel2012} in literature, relying on substantially different insights. Further exploration in this area is clearly needed, especially in unexplored multi-contact scenarios.
 While all of these frameworks are well motivated in their domains, they have two major shortcomings from the viewpoint of whole-body motion control: they do not explicitly incorporate contact, and they do not leverage on the analytical robotics and control knowledge surrounding them.
 
@@ -255,7 +257,7 @@ The aim of the work performed on human postural control and whole body motion in
 %\end{figure}
 
 \subsubsection{Design of models for human whole body motion in contact}
-Some work has been performed on understanding how to derive simplified models of whole-body balance that will encapsulate the task relevant parameters of posture control with multiple contacts. By emulating situations when balance of an individual is challenged, we examined functional role of supportive hand contact at different locations where balance of an individual was perturbed by translational perturbations of the support surface. The experimental methods are depicted on the left side of Figure~\ref{fig:exp_paper_W2}.
+Some work has been performed on understanding how to derive simplified models of whole-body balance that will encapsulate the task relevant parameters of posture control with multiple contacts. 
 
 \begin{figure}
 \centering
@@ -264,39 +266,21 @@ Some work has been performed on understanding how to derive simplified models of
 \label{fig:exp_paper_W2}
 \end{figure}
 
-We found that an additional supportive hand contact significantly reduced the maximal displacement of the subject's centre of pressure (CoP) regardless of the position of the handle and the type of the perturbation. On the other hand, the position of the handle had no effects on the maximal CoP displacement (top right diagram on Figure~\ref{fig:exp_paper_W2}) which is against the previous belief that the quality of postural control depend on the location of the hand contact \cite{Sarraf2014} and supports the idea that maintaining postural stability is the task of the highest priority and that the central nervous system does whatever necessary to keep the body balanced \cite{Winter1995}. Specifically, subjects always generated the required hand force, no matter where the location of the handle was, to keep the body balanced to the same extent. To get a better understanding of the functional role of supportive hand contacts, we examined the handle forces exerted by the subjects during the perturbation. In contrast with the effects on CoP, we found significant effects of perturbation direction, perturbation intensity and handle position on the maximal force in the handle (bottom right diagram on Figure~\ref{fig:exp_paper_W2}). A detailed description of these results can be found in  \cite{babivc2014effects}.\\
 
-A 3D dynamic model of a human holding to a stable object during continuous perturbations of stance was also created. The model was devised from measurements on 13 male subjects. Using the kinematical data recorded with frequency of 100Hz, forces that the subjects excerted on the ground, and the forces in the handle, we performed an inverse dynamic procedure and obtained joint torques produced by muscles during the experiment. An illustration of the model is shown in Figure~\ref{fig:skeleton}. Using this modelling approach we are now able to efficiently study the biomechanics of humans in contact with the environment.\\
-
-\begin{figure}[!t]
-	\begin{center}
-		\includegraphics[width=0.65\linewidth]{images/skeleton_v1.png}
-		\caption{Model of a subject holding a handle.}
-		\label{fig:skeleton}
-	\end{center}
-\end{figure}
+\paragraph{Postural stability with multiple contacts} By emulating situations when balance of an individual is challenged, we examined functional role of supportive hand contact at different locations where balance of an individual was perturbed by translational perturbations of the support surface. The experimental methods are depicted on the left side of Figure~\ref{fig:exp_paper_W2}. We found that an additional supportive hand contact significantly reduced the maximal displacement of the subject's centre of pressure (CoP) regardless of the position of the handle and the type of the perturbation. On the other hand, the position of the handle had no effects on the maximal CoP displacement (top right diagram on Figure~\ref{fig:exp_paper_W2}) which is against the previous belief that the quality of postural control depend on the location of the hand contact \cite{Sarraf2014} and supports the idea that maintaining postural stability is the task of the highest priority and that the central nervous system does whatever necessary to keep the body balanced \cite{Winter1995}. Specifically, subjects always generated the required hand force, no matter where the location of the handle was, to keep the body balanced to the same extent. To get a better understanding of the functional role of supportive hand contacts, we examined the handle forces exerted by the subjects during the perturbation. In contrast with the effects on CoP, we found significant effects of perturbation direction, perturbation intensity and handle position on the maximal force in the handle (bottom right diagram on Figure~\ref{fig:exp_paper_W2}). A detailed description of these results can be found in  \cite{babivc2014effects}. A 3D dynamic model of a human holding to a stable object during continuous perturbations of stance was also created. The model was devised from measurements on 13 male subjects. Using the kinematical data recorded with frequency of 100Hz, forces that the subjects exerted on the ground, and the forces in the handle, we performed an inverse dynamic procedure and obtained joint torques produced by muscles during the experiment. An illustration of the model is shown in the left panel in Figure~\ref{fig:skeleton_ellipses}. Using this modelling approach we are now able to efficiently study the biomechanics of humans in contact with the environment.
 
 %A study of  the effects of hand contact on the stability of a planar humanoid robot (see Figure~\ref{planarhumanoid}) while a momentum based controller is used to control the robot's balancing motion was  aslo performed \cite{Azad2014}. It compared the simulation results with the results of the experiments on human subjects which are reported in \cite{babivc2014effects}. Both simulations and experiments agreed that different values of hand contact forces in different hand positions cause the same displacements of the CoP of the foot. This implies that regulating the CoP of the foot has the highest priority for both humans and the momentum based  controller.  This study suggested that the momentum based controller is an adequate controller to replicate human behaviour during balancing motions.
 
-\begin{figure}[!t]
-  %\centering
-	%\begin{subfigure}[b]{0.45\textwidth}
-	%\centering
-  	%\includegraphics[trim=53mm 144mm 110mm 44mm, clip,
-    %scale=0.6]{images/planarhumanoid.pdf}
-	%\subcaption{Schematic diagram of the robot model and its coordinates}
-   %\label{planarhumanoid}
-	%\end{subfigure}
-	%\begin{subfigure}[b]{0.45\textwidth}
-	\centering
-	\includegraphics[trim=45mm 0mm 65mm 5mm, clip, scale=0.3]{images/ellipses.pdf}
-	\caption{Velocity ellipses for a planar humanoid robot}
-	\label{ellipses}
-	%\end{subfigure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[height=5cm]{images/skeleton_v1.png}
+		\includegraphics[height=5cm]{images/ellipses.pdf}
+		\caption{Left: three dimensional model of a human subject holding a handle. Right: center of mass velocity ellipses for a planar humanoid robot.}
+		\label{fig:skeleton_ellipses}
+	\end{center}
 \end{figure}
 
-A work on defining a suitable metric to
-measure the effects of the environmental contacts on the robot's stability was also undertaken.
+\paragraph{Metric for postural stability with multiple contacts} A work on defining a suitable metric to measure the effects of the environmental contacts on the robot's stability was also undertaken.
 It used the basic concept of end-effector manipulability (for manipulators)
 in the literature and introduced a new tool to analyze the ability of balance
 for legged robots which we called it manipulability of the center of mass.
@@ -313,9 +297,7 @@ ellipsoids (via impulsive dynamics), these ellipsoids allow us to study the
 effect of under-actuation as well as kinematic constraints on the robot's
 stability.
 
-As an example, Figure~\ref{ellipses} shows a planar humanoid robot (with its hand 
-is fixed) and instantaneous velocity ellipses for the robot in the
-specified configuration. Since the robot is fully actuated, the first and
+As an example, right panel in Figure~\ref{fig:skeleton_ellipses} shows a planar humanoid robot (with its hand is fixed) and instantaneous velocity ellipses for the robot in the specified configuration. Since the robot is fully actuated, the first and
 second types of ellipses (type 2 and type 3) are the same. This ellipse (type
 2) shows how the velocity of the CoM changes when the instantaneous change of
 the joint velocities due to the impulse has the unit norm. This shows the
@@ -374,7 +356,7 @@ same change at the CoM velocity.
 
 
 \subsubsection{Strategies of dealing with uncertainties in contact}
-A novel method to study human strategies of dealing with contacts with uncertain environment was developped. In this method the human subject was made to perform psychical contacts with the environment through the robot. The human was included into the robot control loop through human-robot interfaces. The idea is that the human sensorimotor system and cognitive system controls a novel mechanical system, i.e. the robot, in physical interaction with the environment. This implies additional human motor control learning and adaptation that can potentially provide us with a deeper insight into how humans deal with a novel environment.
+A novel method to study human strategies of dealing with contacts with uncertain environment was developed. In this method a human subject was made to perform psychical contacts with the environment through the robot. The human was included into the robot control loop through human-robot interfaces. The idea is that the human sensorimotor system and cognitive system controls a novel mechanical system, i.e. the robot, in physical interaction with the environment. This implies additional human motor control learning and adaptation that can potentially provide us with a deeper insight into how humans deal with a novel environment.
 
 Another advantage of this approach is that the human sensorimotor system does not use its own limbs to directly make the contacts with the environment, but uses the robotic limb to do so. Compared to pure biomechanical studies, where the measured human behaviour must be further interpreted, adjusted or transformed before it can be used on the robots, in this approach the measured human behaviour can be directly captured and used in the robot control. This study therefore provides a good complement to our conventional biomechanical studies.
 
@@ -403,13 +385,12 @@ One of the key features of the proposed approach is the ability of the human to 
 \subsubsection{Human contact choice and learning through physical interaction}
 In order to understand how humans make contact choice decisions (e.g. whether or not to initiate a hand contact, and where to place the hand), we need an estimation of joint torques as well as a metric of stability in various multi-contact situations.
 
-To understand the factors involved in human choice of contact utilization, we performed a series of experiments where the subjects were standing still with arms hanging freely at the sides. The parallel platform induced a randomly timed series of perturbations of different accelerations, velocities and displacements. The aim of the experiments was to investigate what profile of support perturbation forces the human to make a supportive hand contact with environment and how human chooses the location of the hand contact with regard to the direction of the perturbation. Interestingly, we found that the subjects reacted to every perturbation no matter how small or slow the perturbation was or what was the initial acceleration of the perturbation. The reactions were manifested as muscle twitches of shoulder or as unspecific arm motions that were unrelated to the proximity of possible support objects. The reactions occurred also at the smallest perturbations when no actual correction of balance was needed. Our experiments showed that these reactions are essentially protective reactions rather than reactions that have counterbalancing effects \cite{McIlroy1995, Corbeil2013}.
+%To understand the factors involved in human choice of contact utilization, we performed a series of experiments where the subjects were standing still with arms hanging freely at the sides. The parallel platform induced a randomly timed series of perturbations of different accelerations, velocities and displacements. The aim of the experiments was to investigate what profile of support perturbation forces the human to make a supportive hand contact with environment and how human chooses the location of the hand contact with regard to the direction of the perturbation. Interestingly, we found that the subjects reacted to every perturbation no matter how small or slow the perturbation was or what was the initial acceleration of the perturbation. The reactions were manifested as muscle twitches of shoulder or as unspecific arm motions that were unrelated to the proximity of possible support objects. The reactions occurred also at the smallest perturbations when no actual correction of balance was needed. Our experiments showed that these reactions are essentially protective reactions rather than reactions that have counterbalancing effects \cite{McIlroy1995, Corbeil2013}.
 
-These reactions mask the real factors involved in human choice of contact utilization. We therefore altered the perturbation methods for our further experiments and designed continuous random perturbations in a frequency band that corresponds with typical human motion during postural control \cite{Nawayseh2006}. By doing so we excluded the effect of surprise that evoked the reflex reactions of humans. This will hopefully allow us to uncover the factors involved in human choice of contact utilization.\\
 
-In continuation of this work, we also studied how additional hand contact with the surrounding objects influences whole-body balance conditions. The experiments were performed on multiple subjects where we challenged their balance. The experiments were divided into two main stages. Each stage had 15 sessions in which the subject's balance was perturbed for 5 minutes. In one stage the subjects did not use supportive hand contact. In the other stage they were holding a handle in front of them. We used a motorised wait-pull mechanism \cite{Peternel2013} to continuously perturb the balance of the standing subjects in either stage by exerting external forces on the approximate position of centre of mass. See Figure~\ref{fig:exp2_protocol} for the experimental setup.
+%These reactions mask the real factors involved in human choice of contact utilization. We therefore altered the perturbation methods for our further experiments and designed continuous random perturbations in a frequency band that corresponds with typical human motion during postural control \cite{Nawayseh2006}. By doing so we excluded the effect of surprise that evoked the reflex reactions of humans. This will hopefully allow us to uncover the factors involved in human choice of contact utilization.\\
 
-\begin{figure}[!t]
+\begin{figure}
 	\begin{center}
 		\includegraphics[width=\linewidth]{images/exp2_protocol.pdf}
 		\caption{The subject was standing on a force plate, connected to the motorised waist-pull system that generated translational perturbations. The subject was holding the handle with a built-in force sensor mounted on a vertical pole. EMG electrodes were positioned on the major body muscles of the subject's right-hand side.}
@@ -417,11 +398,9 @@ In continuation of this work, we also studied how additional hand contact with t
 	\end{center}
 \end{figure}
 
-The perturbation waveform of the waist-pull mechanism was constructed in a way that the possible muscle reactions associated with reflexes were eliminated. These reactions could potentially mask the actual role of the hand muscles as the reflex would activate the muscles unrelated to the magnitude of the perturbation. To avoid that, the perturbation waveform was continuous, had relatively low frequency and low pulling forces. During the experiment, we measured muscle activation of the subject's lower leg, trunk and arm muscles, forces in the handle and the anteroposterior movement of CoP (CoP$_{AP}$).
+\paragraph{Motor adaptation with supportive hand contacts} In continuation of this work, we also studied how additional hand contact with the surrounding objects influences whole-body balance conditions. The experiments were performed on multiple subjects where we challenged their balance. The experiments were divided into two main stages. Each stage had 15 sessions in which the subject's balance was perturbed for 5 minutes. In one stage the subjects did not use supportive hand contact. In the other stage they were holding a handle in front of them. We used a motorised wait-pull mechanism \cite{Peternel2013} to continuously perturb the balance of the standing subjects in either stage by exerting external forces on the approximate position of centre of mass. See Figure~\ref{fig:exp2_protocol} for the experimental setup. The perturbation waveform of the waist-pull mechanism was constructed in a way that the possible muscle reactions associated with reflexes were eliminated. These reactions could potentially mask the actual role of the hand muscles as the reflex would activate the muscles unrelated to the magnitude of the perturbation. To avoid that, the perturbation waveform was continuous, had relatively low frequency and low pulling forces. During the experiment, we measured muscle activation of the subject's lower leg, trunk and arm muscles, forces in the handle and the anteroposterior movement of CoP (CoP$_{AP}$). The results of muscle activation analysis showed that when the subjects were holding to the handle, the activation of the leg muscles was minimal (see Figure~\ref{fig:representativePSD}). Based on this we can conclude that the subjects mainly used their arm muscles to maintain postural stability. The trunk flexor muscle (Obliques Externus, OE) was more active in the stage when the subjects were holding the handle compared to when they were not. This indicates that a synergy between the arm and trunk muscles was established when additional hand contact was utilised to maintain the equilibrium.
 
-The results of muscle activation analysis showed that when the subjects were holding to the handle, the activation of the leg muscles was minimal (see Figure~\ref{fig:representativePSD}). Based on this we can conclude that the subjects mainly used their arm muscles to maintain postural stability. The trunk flexor muscle (Obliques Externus, OE) was more active in the stage when the subjects were holding the handle compared to when they were not. This indicates that a synergy between the arm and trunk muscles was established when additional hand contact was utilised to maintain the equilibrium.
-
-\begin{figure}[!t]
+\begin{figure}
 	\begin{center}
 		\includegraphics[width=\linewidth]{images/representativePSD_oneYaxis-v1.pdf}
 		\caption{Effect of holding a handle after adaptation stabilised in the last session. The graphs show representative power spectral density (PSD) profiles of CoP$_{AP}$ and muscle activations measured in trunk and lower leg muscles. After the adaptation, effect of additional supportive hand contact stabilised to the perturbation in the last session. All EMG and CoP$_{AP}$ values are presented in a frequency domain, ranging from 0.25 Hz - 1 Hz. The blue (solid) lines represent the power in no-handle and the orange (dashed) lines in handle stage. The grey (dotted) line is the power of the perturbation signal. All signals are normalized to the peak value in the last session. The effect of handle is shown as reduced muscle activation in all muscles in the handle session, except in the trunk flexor muscle (OE), where there is an opposite effect.}
@@ -431,7 +410,7 @@ The results of muscle activation analysis showed that when the subjects were hol
 
 The analysis of the CoP$_{AP}$ movement showed that the displacement of the CoP$_{AP}$ was progressively dropping throughout the repeated sessions of the experiment (see Figure~\ref{fig:COPapAndTau}). This was true both in case when supportive hand contact was used and in case when no supportive hand contact was used. These results give a strong hint that a learning and adaptation was present through the sessions of the experiment, as the subject gradually improved the balance control.
 
-\begin{figure}[!t]
+\begin{figure}
 	\begin{center}
 		\includegraphics[width=\linewidth]{images/COPapAndTau.pdf}
 		\caption{Adaptation of movement of CoP$_{AP}$ is shown on the left graph. Experimental stage with handle (WH) is shown in red, while condition without handle (NH) is shown in blue. Full markers indicate statistically significant differences between the first session and each of the following sessions. In both stages the adaptation is statistically confirmed (\textit{p} < .001). In the stage where the subjects were holding the handle, the adaptation appeared right after the first session. In no-holding stage it appeared after the third session. The superimposed best-fit curves are shown on the right graphs with orange solid lines. A calculated session number at 3$\tau$ of the fitted curve (vertical dotted line) indicates faster stabilisation of adaptation in the handle stage, compared to no-handle stage.}
@@ -439,25 +418,24 @@ The analysis of the CoP$_{AP}$ movement showed that the displacement of the CoP$
 	\end{center}
 \end{figure}
 
-We further analysed whether there are any effects of repeated sessions on adaptation of muscle activation and movement of CoP$_{AP}$ (Figure~\ref{fig:meanErrorBars}), and whether there are any differences between the two stages of the experiment. The results show that the effect of human adaptation in lower leg muscles was statistically significant in the stage when the subjects were not using the additional hand support. However, this was not the case for the stage when the subjects were holding to the handle.
+We further analysed whether there are any effects of repeated sessions on adaptation of muscle activation and movement of CoP$_{AP}$ (Figure~\ref{fig:meanErrorBars}), and whether there are any differences between the two stages of the experiment. The results show that the effect of human adaptation in lower leg muscles was statistically significant in the stage when the subjects were not using the additional hand support. However, this was not the case for the stage when the subjects were holding to the handle. The activation of the trunk extensor muscle (MF) was almost the same in both stages and throughout all sessions. On the other hand, the activation of the trunk flexor OE remained unchanged throughout the sessions only in the stage when subjects held the handle. The activation of OE was much higher in this stage compared to stage when subject did not use supportive hand contact.
 
-The activation of the trunk extensor muscle (MF) was almost the same in both stages and throughout all sessions. On the other hand, the activation of the trunk flexor OE remained unchanged throughout the sessions only in the stage when subjects held the handle. The activation of OE was much higher in this stage compared to stage when subject did not use supportive hand contact.
-
-\begin{figure}[!t]
+\begin{figure}
 	\begin{center}
-		\includegraphics[width=\linewidth]{images/meanErrorBarsAll.pdf}
+		\includegraphics[height=4cm]{images/meanErrorBarsAll-1.pdf}
+		\includegraphics[height=4cm]{images/meanErrorBarsAll-2.pdf}
+		\includegraphics[height=4cm]{images/meanErrorBarsAll-3.pdf}
 		\caption{Figure shows the effect of repeated sessions on muscle activation and CoP$_{AP}$ movement. Blue squares with SEM represent mean PSD in no handle and orange diamonds with SEM represent mean PSD in handle condition. Coloured markers indicate statistically significant sessions (mean values of individual session compared to the mean of the 1st session).}
 		\label{fig:meanErrorBars}
 	\end{center}
 \end{figure}
 
-We performed an analysis of differences in EMG activation levels between the two experimental stages in the frequency spectrum of the perturbation waveform (low = 0.25 - 0.5 Hz, medium = 0.5 - 0.75 Hz, high = 0.75 - 1.0 Hz). A paired samples analysis between the two stage for low, medium and high frequency range revealed that there was an influence of additional hand contact on both lower leg muscles. There were confirmed statistically significant differences between the two stages in all frequency ranges and for all sessions. For the MF muscle these differences were not significant in any of the frequency range nor session. However, there were significant differences between the two stages for the OE muscle. These differences occurred in the medium and high frequency range but only in the last session.
+We performed an analysis of differences in EMG activation levels between the two experimental stages in the frequency spectrum of the perturbation waveform (low = 0.25 - 0.5 Hz, medium = 0.5 - 0.75 Hz, high = 0.75 - 1.0 Hz). A paired samples analysis between the two stage for low, medium and high frequency range revealed that there was an influence of additional hand contact on both lower leg muscles. There were confirmed statistically significant differences between the two stages in all frequency ranges and for all sessions. For the MF muscle these differences were not significant in any of the frequency range nor session. However, there were significant differences between the two stages for the OE muscle. These differences occurred in the medium and high frequency range but only in the last session. When the subjects were holding to the handle, we recorded the forces exerted on the handle during the continuous postural perturbations. Statistical analysis of handle forces revealed that the repetition of sessions had no significant effects (see Figure~\ref{fig:HandleForces}). Even though the activation of arm extensor muscle changed (decreased) during sessions, there was no significant change in forces applied on the handle.\\
 
-When the subjects were holding to the handle, we recorded the forces exerted on the handle during the continuous postural perturbations. Statistical analysis of handle forces revealed that the repetition of sessions had no significant effects (see Figure~\ref{fig:HandleForces}). Even though the activation of arm extensor muscle changed (decreased) during sessions, there was no significant change in forces applied on the handle.\\
-
-\begin{figure}[!t]
+\begin{figure}
 	\begin{center}
-		\includegraphics[width=\linewidth]{images/HandleForce-all.pdf}
+		\includegraphics[width=0.45\linewidth]{images/HandleForce-all-1.pdf}
+		\includegraphics[width=0.45\linewidth]{images/HandleForce-all-2.pdf}
 		\caption{The picture shows the handle force as recorded during the proposed experiments (see text).}
 		\label{fig:HandleForces}
 	\end{center}
@@ -472,13 +450,9 @@ When the subjects were holding to the handle, we recorded the forces exerted on 
 \label{fig:HumanProMPsPrediction}
 \end{figure}
 
-We also studied whether supporting contacts in human arm reaching tasks are planned or an effect of a reactive controller. Investigations on human motor learning has focused on adaptation experiments with fixed contact points leaving research on the computational role of contacts as a free control variable unexplored.
+\paragraph{Planned vs reactive contact models} We studied whether supporting contacts in human arm reaching tasks are planned or an effect of a reactive controller. Investigations on human motor learning has focused on adaptation experiments with fixed contact points leaving research on the computational role of contacts as a free control variable unexplored. In perturbed target reaching experiments sketched in Figure~\ref{fig:HumanProMPsPrediction}, we studied weather supporting contacts are planned or reactive. Subjects had to reach for distant targets on a screen with their right hand. For reaching the target additional support through contacts with a table using the left hand was inevitably. If the contacts are planned then the left hand's motion can predict the right hand reaching. We studied how probabilistic inference in learnt models can be used to answer this question. Evidence for planned contacts could be provided through learning probabilistic models of trajectory distributions and using the models to generate predictions, Figure~\ref{fig:HumanProMPsPrediction} (a). We found that the target on the screen could be predicted from both, the left hand (mse: $10.4$cm $\pm$ $2$cm over $20$ subjects) and the trunk movement (mse: $6.7$cm $\pm$ $1.4$cm over $20$ subjects), which is illustrated in Figure~\ref{fig:HumanProMPsPrediction} (b-c). The learnt probabilistic model could also be used to analyse the rate of adaptation of the left hand and the trunk kinematics, where the trunk trajectories converged faster than the left hand motion. This is intuitively explained by the strong need for corrective trunk movements in balancing. A report on the findings is currently in progress of writing.
 
-In perturbed target reaching experiments sketched in Figure~\ref{fig:HumanProMPsPrediction}, we studied weather supporting contacts are planned or reactive. Subjects had to reach for distant targets on a screen with their right hand. For reaching the target additional support through contacts with a table using the left hand was inevitably. If the contacts are planned then the left hand's motion can predict the right hand reaching.
-
-We studied how probabilistic inference in learnt models can be used to answer this question. Evidence for planned contacts could be provided through learning probabilistic models of trajectory distributions and using the models to generate predictions, Figure~\ref{fig:HumanProMPsPrediction} (a). We found that the target on the screen could be predicted from both, the left hand (mse: $10.4$cm $\pm$ $2$cm over $20$ subjects) and the trunk movement (mse: $6.7$cm $\pm$ $1.4$cm over $20$ subjects), which is illustrated in Figure~\ref{fig:HumanProMPsPrediction} (b-c). The learnt probabilistic model could also be used to analyse the rate of adaptation of the left hand and the trunk kinematics, where the trunk trajectories converged faster than the left hand motion. This is intuitively explained by the strong need for corrective trunk movements in balancing. A report on the findings is currently in progress of writing.
-
-Driven by the question on how human CNS optimizes arm reaching motions when the supportive hand contact has to be reached in order to maintain postural balance, a combined experimental and computational study was started where the aim is to challenge two well-established but conceptually separated motor control phenomena: (i) Humans tend to reach faster to a target that looks more rewarding, despite the additional muscular cost of a faster movement \cite{Fitts1954}, and (ii) when humans have to be precise, movements take longer to perform \cite{Shadmehr2010}. The aim of our study is to experimentally disclose both phenomena and evaluate a novel computational model designed to join them. We obtained several very promising preliminary results indicating a general mechanism that can unify both phenomena and point out a global trade-off arising from the interactions between movement time, cost and accuracy. The experimental setup is shown in Figure~\ref{fig:UnifyingTwoPhenomena}.
+\paragraph{Time and precision tradeoff in supportive hand contacts} Driven by the question on how human CNS optimizes arm reaching motions when the supportive hand contact has to be reached in order to maintain postural balance, a combined experimental and computational study was started where the aim is to challenge two well-established but conceptually separated motor control phenomena: (i) Humans tend to reach faster to a target that looks more rewarding, despite the additional muscular cost of a faster movement \cite{Fitts1954}, and (ii) when humans have to be precise, movements take longer to perform \cite{Shadmehr2010}. The aim of our study is to experimentally disclose both phenomena and evaluate a novel computational model designed to join them. We obtained several very promising preliminary results indicating a general mechanism that can unify both phenomena and point out a global trade-off arising from the interactions between movement time, cost and accuracy. The experimental setup is shown in Figure~\ref{fig:UnifyingTwoPhenomena}.
 
 
 \begin{figure}
@@ -522,7 +496,7 @@ optimal fashion. We call this level the "global control policy" level.
 
 
 \subsubsection{Formulating and solving the local control problem}
-The work performed on formulating  and solving the control problem has led to the definition of what a task can be considered to be in the context of the reactive formulation of a multi-task whole body control problem. Among the different characteristics of a task (physical frame, task variable, forward model, desired target trajectory, local controller, priority), the notion of task priority has been largely modified with respect to the classical lexicographic task ordering met in the robotics literature and which is particularly appropriate for cascade resolution approaches such as the one recently proposed in \cite{escande2012}. A partial order has been defined such that task priorities can be described for any pair of task $i$ and $j$. This leads to a richer formulation which includes the original one but is also particularly appropriate for describing task insertion and removal processes as well as priority switching between tasks. Further more, this new prioritization paradigm provides a unique way of defining strict and soft hierarchies between tasks. Associated to this work, the notion  of generalized task projector has been introduced. Each task is associated to a projector which is built based on the tasks priorities. The interest of this projector is that it filters the joint space motion associated to a task so that all priorities are respected, being them soft or strict.
+The work performed on formulating  and solving the control problem has led to the definition of what a task can be considered to be in the context of the reactive formulation of a multi-task whole body control problem. Among the different characteristics of a task (physical frame, task variable, forward model, desired target trajectory, local controller, priority), the notion of task priority has been largely modified with respect to the classical lexicographic task ordering met in the robotics literature and which is particularly appropriate for cascade resolution approaches such as the one recently proposed in \cite{escande2012}. A partial order has been defined such that task priorities can be described for any pair of task $i$ and $j$. This leads to a richer formulation which includes the original one but is also particularly appropriate for describing task insertion and removal processes as well as priority switching between tasks. Furthermore, this new prioritization paradigm provides a unique way of defining strict and soft hierarchies between tasks. Associated to this work, the notion  of generalized task projector has been introduced. Each task is associated to a projector which is built based on the tasks priorities. The interest of this projector is that it filters the joint space motion associated to a task so that all priorities are respected, being them soft or strict.
 
 The control problem has been formulated as an LQP \cite{Salini-2011-ID348} which can be solved by any convex optimization solver dealing with linear constraints. Despite the task hierarchy, the introduction of a generalized task projector per task allows to solve only one LQP. This can be done by introducing as many virtual joint space variables as the number of tasks and using the generalized projector of each task in the expression of the constraints. The resulting problem can be solved by standard convex optimization tools and the cost of introducing virtual joint space variables is compensated for by the fact that only one optimization problem has to be solved. Details regarding this work, so-called Generalized Hierarchical Control (GHC), are provided in \cite{liu2015}. 
 
@@ -857,8 +831,8 @@ the robot mission (e.g., its ``global'' task).
 In \cite{Salini-2011-ID348}, a second controller is based on \textit{soft task hierarchies}, where
 the solution is typically given by a combination of weighted tasks. The importance or ``soft priority'' of each individual
 task is represented by a scalar weight. By tuning the vector of scalar weights,
-evolving in time, the global robot behavior can be optimized. Liu et
-al. \cite{liu2015} propose a generalized projector (GHC) that handles
+evolving in time, the global robot behaviour can be optimised. Liu et
+al. \cite{liu2015} propose a generalised projector (GHC) that handles
 strict and non-strict priorities with smooth transitions when tasks priorities
 are swapped. They show that adapting these weights may result in a seamless
 transition between tasks (i.e., reaching for an object, staying close to a
@@ -868,8 +842,8 @@ tuning: particularly, the evolution of the tasks priorities in time, the timing
 and the tasks transitions need to be designed by hand. While this approach could
 still be easy for few tasks and simple robotic arms, it can quickly become
 unfeasible for complex robots such as humanoids performing whole-body movements
-that usually require a dozen of tasks and constraints (e.g., control balance,
-posture, end-effectors, stabilize head gaze, prevent slipping, control
+that usually require multiple tasks and constraints (e.g., control balance,
+posture, end-effectors, stabilise head gaze, prevent slipping, control
 interaction forces etc.).
 
 \begin{figure}%[t!]
@@ -1005,22 +979,20 @@ The vector $\nu \in \Rv{n+6}$ represents the robot velocity
 (it includes both $\dot{q}_j \in \Rv{n}$ and the linear and angular velocity of the base-frame $v_b \in \Rv{6}$), the system acceleration is denoted as $\dot \nu$,
 the derivative of $\nu$, the control input
 $\tau \in \Rv{n}$ is the vector of joint torques, $M \in \R{(n+6)}{(n+6)}$ is the mass matrix, $h \in \Rv{n+6}$ contains both
-gravitational and Coriolis terms, $S \in \R{n}{(n+6)} := (0_{n\times 6}, I_n)^\top$ is the matrix selecting the actuated degrees of freedom,
-$f \in \Rv{6}$ is the external, contact wrench, and $J \in \R{6}{(n+6)}$ is
-the contact Jacobian.
+gravitational and Coriolis terms, $S \in \R{n}{(n+6)} := (0_{n\times 6}, I_n)^\top$ is the matrix selecting the actuated degrees of freedom, $k$ is the number of constraints acting on the system, $f \in \Rv{k}$ are the generalised forces associated to the constraints, and $J \in \R{k}{(n+6)}$ is the constraint Jacobian \eqref{eq:contact}.
 
 
 \subsection{Problem statement}
 
 The control objective is the asymptotic stabilization of a desired centroidal dynamics \cite{Orin2013}. Let $H$
-denote the centroidal momentum of the robot. Then, the time derivative of $H$ is equal to the summation of the external wrenches acting on the multi-body system. When the robot stands on one foot and the centroidal momentum is expressed with respect to the center of mass, one has
+denote the centroidal momentum of the robot. Then, the time derivative of $H$ is equal to the summation of the external wrenches acting on the multi-body system. By expressing the centroidal momentum with respect to the center of mass, we have:
 
 \begin{eqnarray} 
     {\dot H}  =   X f + mg 
      = \begin{pmatrix} m \ddot{x} \\ \dot{H}_\omega  \end{pmatrix} \label{eq:constraintsSi}
 \end{eqnarray}
 where $m$ is the mass of the robot, $g \in \mathbb{R}^6$ is the gravitational acceleration, $\ddot{x} \in \mathbb{R}^3 $ 
-is the acceleration of the center of mass, $H_\omega \in \mathbb{R}^3$ is the \emph{angular momentum} of the robot, and the matrix $X$ maps the wrench acting on the left foot  with respect to the center of mass.
+is the acceleration of the center of mass, $H_\omega \in \mathbb{R}^3$ is the \emph{angular momentum} of the robot, and the matrix $X$ maps the contact wrenches on the center of mass.
 
 The control objective is to find a control law for the inputs $\tau$ such that $x \rightarrow x(0)$ and $H_\omega \rightarrow 0$. This choice is sufficient for balancing purposes. Also, while achieving this control objective, the system shall have a degree of compliance.
 
@@ -1031,13 +1003,13 @@ The control strategy is composed of two steps. We first choose the external forc
 
 Being the matrix $X$ invertible, the contact force $f$ achieving the control objective may be chosen as follows:
 
-\begin{eqnarray} 
+\begin{multline} 
     \label{fd}
-   f = -X^{-1}\left[k_d H + k_p\begin{pmatrix} x-x(0) \\ 0_{3\times1}  \end{pmatrix} + mg\right], 
-\end{eqnarray}
- with $k_d$ and $k_p$ two positive constants.
+   f = -X^{\dagger}\left[k_d H + k_p\begin{pmatrix} x-x(0) \\ 0_{3\times1}  \end{pmatrix} + mg\right] \\ + \left( I - X^{\dagger} X \right) f_0, 
+\end{multline}
+ with $k_d$ and $k_p$ two positive constants and $f_0$ arbitrarily chosen to obtain a solution $f$ as similar as possible to a desired value.
  
- In order to keep the foot on the ground, the above wrench must satisfy some constraints, e.g., the contact force
+ In order to keep the motion constraints satisfied, $f$ must satisfy some constraints, e.g., the contact forces
  must belong to the associated friction cones. In general, the contact constraints can be represented by inequalities of the 
  form $Cf < d$, with the matrix $C$ and the vector $d$ properly chosen. Then, we choose the contact wrench  as fallows:
 
