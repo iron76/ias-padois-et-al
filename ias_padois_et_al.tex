@@ -107,7 +107,8 @@
 \address{Sorbonne Universit\'{e}s, UPMC Univ Paris 06, UMR 7222, Institut des Syst\`{e}mes Intelligents et de Robotique, F-75005, Paris, France\\CNRS, UMR 7222, Institut des Syst\`{e}mes Intelligents et de Robotique F-75005, Paris, France. Email: vincent.padois@upmc.fr }
 
 \author{Serena Ivaldi}
-\address{French Institute for Research in Computer Science and Automation (INRIA) Nancy Grand-Est, France. Email: serena.ivaldi@inria.fr}
+\address{Inria, Villers-lès-Nancy, F-54600, France\\
+CNRS  \& Universit\'e de Lorraine, Loria, UMR n. 7503, Vandoeuvre-l\`es-Nancy, F-54500, France. Email: serena.ivaldi@inria.fr}
 
 \author{Jan Babic}
 \address{Faculty of Electrical Engineering Josef Stefan Institute, Slovenia Email: jan.babic@ijs.si}
@@ -165,6 +166,7 @@ Within this context one of the major challenges of robotic research is to advanc
 \includegraphics[width=1.0\linewidth]{./images/scenarios.png}
 %\label{fig:subfig2}
 \label{fig:scenarios}
+\caption{The four main scenarios involving whole-body motion with multiple contacts, addressed in the CoDyCo project.}
 \end{figure}
 
 \subsection {Compliance in whole-body motion}
@@ -210,7 +212,7 @@ Among the recent achievements in the field of robotics, there are two major tech
 Force control is a fundamental property for any autonomous agent in interaction with the environment. First attempts to regulate interaction forces relied on active force and compliance control schemes, typically coupled with custom mechanical designs such as the ones proposed in \cite{Salisbury1988} and \cite{Hayashi2007}, which were eventually implemented on successful commercial manipulators. Similar solutions have been eventually implemented on some humanoid platforms \cite{Cheng2006} \cite{Escande2010}, including the iCub \cite{Fumagalli2012}. Recent theoretical and technological advances have revealed the importance of intentionally introducing mechanical compliance in the design \cite{Pratt1995} and (even more recently) the necessity of actively regulating the actuator passive compliance \cite{Koganezawa2005} \cite{Tonietti2005} \cite{Migliore2005}. It is to be expected that within the next years robots such as iCub will be equipped with variably compliant actuation technologies at some (if not all) of the main joints \cite{Tsagarakis2009} \cite{Tsagarakis2011}.
 
 Touch is another fundamental sensing capability for autonomous agents willing to interact with an unstructured environment or humans \cite{Argall2010a}. Whole-body distributed touch sensing has been only recently embedded on humanoid robots, but there already exist quite a few examples: Robovie-IV \cite{Mitsunaga2006}, RI-MAN \cite{Mukai2008}, Macra \cite{Hayashi2007}  and Meka \cite{Jain}, just to cite a few. The iCub already integrates a mature technology \cite{Schmitz2011} covering the upper body, legs and feet soles. 
-Finally, several open-source software libraries have been developed in the last years to support research in whole-body dynamics and contact simulation. Several dynamics simulators have been developed for robotics (see \cite{ivaldi2014} for a survey). The most interesting physics engines for our purposes are the ones with Featherstone-like forward dynamics calculation \cite{Featherstone2008} \cite{Yamane2006a}, built-in collision detection and stable numerical contact forces computations \cite{Nakaoka2007}. Among the kinematic and dynamic libraries it is worth citing HuMAnS, a toolbox for analysis and control of both human and humanoid motion, and iDyn, a generic software tool, extensively used in iCub to compute whole-body dynamics and reinforce these computations with measurements coming from sensors embedded in the robot \cite{Fumagalli2012}.
+Finally, several open-source software libraries have been developed in the last years to support research in whole-body dynamics and contact simulation. Several dynamics simulators have been developed for robotics (see \cite{ivaldi2014} for a survey). The most interesting physics engines for our purposes are the ones with Featherstone-like forward dynamics calculation \cite{Featherstone2008} \cite{Yamane2006a}, built-in collision detection and stable numerical contact forces computations \cite{Nakaoka2007}. Among the kinematic and dynamic libraries it is worth citing HuMAnS, a toolbox for analysis and control of both human and humanoid motion, and iDyn, a generic software library for computation of whole-body dynamics and external contact forces of complex manipulators and humanoids \cite{Ivaldi2011}. iDyn has been extensively used in iCub to compute whole-body dynamics as it enalbles to reinforce these computations with measurements coming from inertial, force and tactile sensors embedded in the robot \cite{Fumagalli2012}.
 
 \subsection{Human motor control state-of-the-art}
 Human whole-body motion control has been studied within tasks such as reaching on a supporting surface and sit-to-stand. These movements involve coordination of multiple joints, significant shift of the centre of mass, and control of equilibrium, either in static or dynamic conditions. These are skills learnt early in human childhood but also studied extensively in the context of motor disability, e.g. after neurological insults like stroke, or in the elderly with reduced muscle power, joint flexibility and sensory loss. However, almost nothing is yet known about when healthy subjects choose to make use of contacts with support surfaces. It has been shown that in standing posture, this contact provides augmented sensory information reducing sway \cite{Johannsen2012}, and how in some circumstances, non-weight bearing but informative ``light-touch'' between two standing subjects can cause coupling that leads to increased sway, emphasising that knowledge about the stability and compliance of the contact surface is vital.
@@ -230,10 +232,10 @@ In complex scenarios, when the robot and the environment are assumed to be perfe
 Real-world environments are often hard to capture perfectly with physical models. The uncertainty in model predictions is important during controlled physical contacts between a (humanoid) robot system and its environment. Large errors either in the environmental model or in the task will lead to drastic failures and therefore need to be limited as much as possible by model adaptation. Human-inhabited worlds will never allow perfect modelling and instead require that the system generalises the tasks in such a manner that they work in a wide variety of different uncertain scenarios where there is contact between robots and either humans or physical objects. Machine learning approaches are therefore needed. Particularly in whole-body motion they are necessary for the successful implementation of the control architecture, and its implementation and application to the real-worlds scenarios. However, off-the-shelf machine learning methods are concerned with static data sets and require massive amount of computations, often rendering real-time learning in-feasible. To date, a variety of robot learning approaches have been suggested. The most important being model learning, operational space control learning, learning of elementary tasks and hierarchical combinations of tasks, which are briefly evaluated hereinafter.
 
 \paragraph{Model learning}
- High model accuracy and constant model adaptation may be key for low torque interaction during contact. Models of the robot dynamics have been learned by real-time regression, e.g., locally weighted projection regression \cite{Schaal2002a} and local Gaussian process regression \cite{Nguyen-tuong2010a}. Nevertheless, if any of these approaches would be given the data from a robot in contact with the environment, it would fit the model to this particular case, as the contact forces would just be treated as an additional nonlinearity. As a result, the model will not generalise to new contact models and instead it would be necessary to learn a new model for each type of contact.
+ High model accuracy and constant model adaptation may be key for low torque interaction during contact. Models of the robot dynamics have been learned by real-time regression, e.g., locally weighted projection regression \cite{Schaal2002a} and local Gaussian process regression \cite{Nguyen-tuong2010a}. Learning force/torque models in iCub has been investigated with different regression techniques, such as SVM and Neural Networks \cite{Fumagalli2010}. Nevertheless, if any of these approaches would be given the data from a robot in contact with the environment, it would fit the model to this particular case, as the contact forces would just be treated as an additional nonlinearity. As a result, the model will not generalise to new contact models and instead it would be necessary to learn a new model for each type of contact.
 
 \paragraph{Operational space control learning}
-Control in operational space has been approached both as a direct policy learning problem \cite{Peters2008a} as well as an indirect learning problem via forward models \cite{Salaun2010}. Here, the problem may be even more drastic as changing the contact formulation will alter the problem in its essence. As a result, an operational space control law may not transfer at all but rather become highly problematic under new circumstances. 
+ Control in operational space has been approached both as a direct policy learning problem \cite{Peters2008a} as well as an indirect learning problem via forward models \cite{Salaun2010}. Visuo-motor models from scratch via iterative and incremental learning have been computed, for iCub \cite{Droniou2012}, exploiting its active compliance \cite{Ivaldi2011} to deal with self-body collisions and contacts with the environment. Here, the problem may be even more drastic as changing the contact formulation will alter the problem in its essence. As a result, an operational space control law may not transfer at all but rather become highly problematic under new circumstances. 
 
 \paragraph{Learning of elementary tasks and hierarchical combinations of tasks}
 While learning of contact-free elementary tasks by the combination of imitation learning and policy search \cite{Abbeel2005} \cite{Kober2010} is a well-explored topic, no general approaches to date can tackle the exact same problem and allow for different contact combination. Furthermore, learning of hierarchical elementary task combinations is still in its infancy. Several interesting approaches have been suggested \cite{Stulp2011a} \cite{Mulling2010} \cite{Muico2011} \cite{Daniel2012} in literature, relying on substantially different insights. Further exploration in this area is clearly needed, especially in unexplored multi-contact scenarios.
@@ -310,7 +312,7 @@ controller and they are dependent only on the physical parameters of the robot
 and its kinematic constraints.
 
 In balancing in a plane, the CoM movement in the horizontal direction is an
-important measure. By projecting a velocity ellipse on $x$ axis, we obtain a
+important measure. By projecting a velocity ellipse on $x$-axis, we obtain a
 line which its length equals to the maximum change of velocity of the CoM in
 the horizontal direction. Figure~\ref{type2} (left side) shows maximum
 instantaneous change of the CoM velocity in the horizontal direction for
@@ -398,7 +400,7 @@ In order to understand how humans make contact choice decisions (e.g. whether or
 	\end{center}
 \end{figure}
 
-\paragraph{Motor adaptation with supportive hand contacts} In continuation of this work, we also studied how additional hand contact with the surrounding objects influences whole-body balance conditions. The experiments were performed on multiple subjects where we challenged their balance. The experiments were divided into two main stages. Each stage had 15 sessions in which the subject's balance was perturbed for 5 minutes. In one stage the subjects did not use supportive hand contact. In the other stage they were holding a handle in front of them. We used a motorised wait-pull mechanism \cite{Peternel2013} to continuously perturb the balance of the standing subjects in either stage by exerting external forces on the approximate position of centre of mass. See Figure~\ref{fig:exp2_protocol} for the experimental setup. The perturbation waveform of the waist-pull mechanism was constructed in a way that the possible muscle reactions associated with reflexes were eliminated. These reactions could potentially mask the actual role of the hand muscles as the reflex would activate the muscles unrelated to the magnitude of the perturbation. To avoid that, the perturbation waveform was continuous, had relatively low frequency and low pulling forces. During the experiment, we measured muscle activation of the subject's lower leg, trunk and arm muscles, forces in the handle and the anteroposterior movement of CoP (CoP$_{AP}$). The results of muscle activation analysis showed that when the subjects were holding to the handle, the activation of the leg muscles was minimal (see Figure~\ref{fig:representativePSD}). Based on this we can conclude that the subjects mainly used their arm muscles to maintain postural stability. The trunk flexor muscle (Obliques Externus, OE) was more active in the stage when the subjects were holding the handle compared to when they were not. This indicates that a synergy between the arm and trunk muscles was established when additional hand contact was utilised to maintain the equilibrium.
+\paragraph{Motor adaptation with supportive hand contacts} In continuation of this work, we studied how additional hand contact with the surrounding objects influences whole-body balance conditions. The experiments were performed on multiple subjects where we challenged their balance. The experiments were divided into two main stages. Each stage had 15 sessions in which the subject's balance was perturbed for 5 minutes. In one stage the subjects did not use supportive hand contact. In the other stage they were holding a handle in front of them. We used a motorised wait-pull mechanism \cite{Peternel2013} to continuously perturb the balance of the standing subjects in either stage by exerting external forces on the approximate position of centre of mass. See Figure~\ref{fig:exp2_protocol} for the experimental setup. The perturbation waveform of the waist-pull mechanism was constructed in a way that the possible muscle reactions associated with reflexes were eliminated. These reactions could potentially mask the actual role of the hand muscles as the reflex would activate the muscles unrelated to the magnitude of the perturbation. To avoid that, the perturbation waveform was continuous, had relatively low frequency and low pulling forces. During the experiment, we measured muscle activation of the subject's lower leg, trunk and arm muscles, forces in the handle and the anteroposterior movement of CoP (CoP$_{AP}$). The results of muscle activation analysis showed that when the subjects were holding to the handle, the activation of the leg muscles was minimal (see Figure~\ref{fig:representativePSD}). Based on this we can conclude that the subjects mainly used their arm muscles to maintain postural stability. The trunk flexor muscle (Obliques Externus, OE) was more active in the stage when the subjects were holding the handle compared to when they were not. This indicates that a synergy between the arm and trunk muscles was established when additional hand contact was utilised to maintain the equilibrium.
 
 \begin{figure}
 	\begin{center}
@@ -408,7 +410,7 @@ In order to understand how humans make contact choice decisions (e.g. whether or
 	\end{center}
 \end{figure}
 
-The analysis of the CoP$_{AP}$ movement showed that the displacement of the CoP$_{AP}$ was progressively dropping throughout the repeated sessions of the experiment (see Figure~\ref{fig:COPapAndTau}). This was true both in case when supportive hand contact was used and in case when no supportive hand contact was used. These results give a strong hint that a learning and adaptation was present through the sessions of the experiment, as the subject gradually improved the balance control.
+The analysis of the CoP$_{AP}$ movement showed that the displacement of the CoP$_{AP}$ was progressively dropping throughout the repeated sessions of the experiment (see Figure~\ref{fig:COPapAndTau}). This was true both in case when supportive hand contact was used and in case when no supportive hand contact was used. These results give a strong hint that a learning and adaptation mechanism was present through the sessions of the experiment, as the subject gradually improved the balance control.
 
 \begin{figure}
 	\begin{center}
@@ -430,7 +432,7 @@ We further analysed whether there are any effects of repeated sessions on adapta
 	\end{center}
 \end{figure}
 
-We performed an analysis of differences in EMG activation levels between the two experimental stages in the frequency spectrum of the perturbation waveform (low = 0.25 - 0.5 Hz, medium = 0.5 - 0.75 Hz, high = 0.75 - 1.0 Hz). A paired samples analysis between the two stage for low, medium and high frequency range revealed that there was an influence of additional hand contact on both lower leg muscles. There were confirmed statistically significant differences between the two stages in all frequency ranges and for all sessions. For the MF muscle these differences were not significant in any of the frequency range nor session. However, there were significant differences between the two stages for the OE muscle. These differences occurred in the medium and high frequency range but only in the last session. When the subjects were holding to the handle, we recorded the forces exerted on the handle during the continuous postural perturbations. Statistical analysis of handle forces revealed that the repetition of sessions had no significant effects (see Figure~\ref{fig:HandleForces}). Even though the activation of arm extensor muscle changed (decreased) during sessions, there was no significant change in forces applied on the handle.\\
+We performed an analysis of differences in EMG activation levels between the two experimental stages in the frequency spectrum of the perturbation waveform (low = 0.25 - 0.5 Hz, medium = 0.5 - 0.75 Hz, high = 0.75 - 1.0 Hz). A paired samples analysis between the two stages for low, medium and high frequency range revealed that there was an influence of additional hand contact on both lower leg muscles. There were confirmed statistically significant differences between the two stages in all frequency ranges and for all sessions. For the MF muscle these differences were not significant in any of the frequency range nor session. However, there were significant differences between the two stages for the OE muscle. These differences occurred in the medium and high frequency range but only in the last session. When the subjects were holding to the handle, we recorded the forces exerted on the handle during the continuous postural perturbations. Statistical analysis of handle forces revealed that the repetition of sessions had no significant effects (see Figure~\ref{fig:HandleForces}). Even though the activation of arm extensor muscle changed (decreased) during sessions, there was no significant change in forces applied on the handle.\\
 
 \begin{figure}
 	\begin{center}
@@ -450,7 +452,7 @@ We performed an analysis of differences in EMG activation levels between the two
 \label{fig:HumanProMPsPrediction}
 \end{figure}
 
-\paragraph{Planned vs reactive contact models} We studied whether supporting contacts in human arm reaching tasks are planned or an effect of a reactive controller. Investigations on human motor learning has focused on adaptation experiments with fixed contact points leaving research on the computational role of contacts as a free control variable unexplored. In perturbed target reaching experiments sketched in Figure~\ref{fig:HumanProMPsPrediction}, we studied weather supporting contacts are planned or reactive. Subjects had to reach for distant targets on a screen with their right hand. For reaching the target additional support through contacts with a table using the left hand was inevitably. If the contacts are planned then the left hand's motion can predict the right hand reaching. We studied how probabilistic inference in learnt models can be used to answer this question. Evidence for planned contacts could be provided through learning probabilistic models of trajectory distributions and using the models to generate predictions, Figure~\ref{fig:HumanProMPsPrediction} (a). We found that the target on the screen could be predicted from both, the left hand (mse: $10.4$cm $\pm$ $2$cm over $20$ subjects) and the trunk movement (mse: $6.7$cm $\pm$ $1.4$cm over $20$ subjects), which is illustrated in Figure~\ref{fig:HumanProMPsPrediction} (b-c). The learnt probabilistic model could also be used to analyse the rate of adaptation of the left hand and the trunk kinematics, where the trunk trajectories converged faster than the left hand motion. This is intuitively explained by the strong need for corrective trunk movements in balancing. A report on the findings is currently in progress of writing.
+\paragraph{Planned \textit{vs} reactive contact models} We studied whether supporting contacts in human arm reaching tasks are planned or an effect of a reactive controller. Investigations on human motor learning has focused on adaptation experiments with fixed contact points leaving research on the computational role of contacts as a free control variable unexplored. In perturbed target reaching experiments sketched in Figure~\ref{fig:HumanProMPsPrediction}, we studied weather supporting contacts are planned or reactive. Subjects had to reach for distant targets on a screen with their right hand. For reaching the target additional support through contacts with a table using the left hand was inevitably. If the contacts are planned then the left hand's motion can predict the right hand reaching. We studied how probabilistic inference in learnt models can be used to answer this question. Evidence for planned contacts could be provided through learning probabilistic models of trajectory distributions and using the models to generate predictions, Figure~\ref{fig:HumanProMPsPrediction} (a). We found that the target on the screen could be predicted from both, the left hand (mse: $10.4$cm $\pm$ $2$cm over $20$ subjects) and the trunk movement (mse: $6.7$cm $\pm$ $1.4$cm over $20$ subjects), which is illustrated in Figure~\ref{fig:HumanProMPsPrediction} (b-c). The learnt probabilistic model could also be used to analyse the rate of adaptation of the left hand and the trunk kinematics, where the trunk trajectories converged faster than the left hand motion. This is intuitively explained by the strong need for corrective trunk movements in balancing. A report on the findings is currently in progress of writing.
 
 \paragraph{Time and precision tradeoff in supportive hand contacts} Driven by the question on how human CNS optimizes arm reaching motions when the supportive hand contact has to be reached in order to maintain postural balance, a combined experimental and computational study was started where the aim is to challenge two well-established but conceptually separated motor control phenomena: (i) Humans tend to reach faster to a target that looks more rewarding, despite the additional muscular cost of a faster movement \cite{Fitts1954}, and (ii) when humans have to be precise, movements take longer to perform \cite{Shadmehr2010}. The aim of our study is to experimentally disclose both phenomena and evaluate a novel computational model designed to join them. We obtained several very promising preliminary results indicating a general mechanism that can unify both phenomena and point out a global trade-off arising from the interactions between movement time, cost and accuracy. The experimental setup is shown in Figure~\ref{fig:UnifyingTwoPhenomena}.
 
@@ -471,17 +473,14 @@ We performed an analysis of differences in EMG activation levels between the two
 \subsection{Whole-body controllers}
 
 The overall objective of the work on controllers is to provide a control architecture dedicated 
-to humanoid robots involved in personal/service applications, which imply physical interactions,
+to humanoid robots involved in personal/service applications that imply physical interactions,
  i.e. contacts, with the environment. Such a control architecture is a requirement to bridge 
  the existing gap between state-of-the-art methods in humanoid robots control and real-world
 applications. This gap is, at the control level, mostly due to two factors. The first one is the intrinsic 
 complexity of the robotic system itself as well as the complexity of the environment. This complexity induces uncertainties in the
-knowledge of the models. The second factor is related to the complexity of the decision making process which, in real world applications, can be
-very challenging especially when dealing with missions implying the sequenced and/or parallel realization of complex actions by the robot. The
- combination of those two complexities results in third factor, related to the large computation  times necessary to take control decisions.
+knowledge of the models. The second factor is related to the complexity of the decision making process which, in real world applications, can be very challenging especially when dealing with missions implying the sequenced and/or parallel realization of complex actions by the robot. The combination of those two complexities results in third factor, related to the large computation  times necessary to take control decisions.
 The state-of-the-art methods in humanoid robot are mostly two: pure motion planning and pure reactive control.
- The former tries to solve off-line the overall decision-making process butthe actual action execution phase (typically open-loop) tends to fail because of 
-the "complexity and uncertainty" factors. The latter succeeds in overcoming the "complexity and uncertainty" factor mostly
+ The former tries to solve off-line the overall decision-making process butthe actual action execution phase (typically open-loop) tends to fail because of the "complexity and uncertainty" factors. The latter succeeds in overcoming the "complexity and uncertainty" factor mostly
 thanks to the use of feedback. However the proposed solutions are only locally optimal and the overall
 decision-making process cannot be addressed in the most general cases (i.e. without scripted scenarios).
 The path followed by the CoDyCo project to achieve both globally optimal and locally feasible control
@@ -507,7 +506,7 @@ We also started to investigate scenarios where the robot is interacting with the
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.8\linewidth]{images/LIU_IROS_2015}\\\includegraphics[width=0.8\linewidth]{images/LIU_IROS_2015_bis}
-\caption{Scenarri of interaction with a non-rigid environment (\textit{left}). Structure of the adaptive control architecture (\textit{right}).}
+\caption{Scenarios of interaction with a non-rigid environment (\textit{left}). Structure of the adaptive control architecture (\textit{right}).}
 \label{fig:LIU_IROS_2015}
 \end{figure}
 
@@ -522,18 +521,13 @@ In coordination with the local controller, we also have explored the contributio
 As a  continuation of these works, in order to compute optimal time, duration and position of footsteps along with the center of mass trajectory of a humanoid, a novel mixed-integer model of the system is introduced in \cite{ibanezIROS2014}. The introduction of this model in a predictive control problem brings the definition of a Mixed-Integer Quadratic Program, subject to linear constraints. Simulation results demonstrate the simultaneous adaptation of the gait pattern and posture of the humanoid, in a walking activity under large disturbances, to efficiently compromise between task performance and balance. In addition, a push recovery scenario displays how, using a single balance-performance ratio, distinct behaviors of the humanoid can be specified. Results have been obtained in simulation\footnote{A video associated to this work can be found \url{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/ibanez\_IROS2014.mp4}{\textbf{here}}.} and are being implemented on the TORO robot developed at DLR. Two simple and novel approaches to solve for 3D locomotion with multiple non-coplanar contacts have are also being explored. Both formulations use model predictive control to generate dynamically balanced trajectories with no restrictions on the center of mass height trajectory. The first formulation treats the balance criterion as an objective function, and solves the control problem using a sequence of alternating convex quadratic programs, while the second formulation considers the criterion as constraints to the problem, and solves a succession of convex quadratically constrained quadratic programs. Preliminary results have been obtained in a scenario where a hand contact on a vertical wall is used to improve balance. A staircase climbing scenario has also been studied.\\
 
 Bootstrapping between the local controller and a more global reasonning approach also lies in the capability to incrementally learn and adapt the models used for control.
-Thus, we continued research in inverse dynamics model learning in situations with contacts. A mixture of experts approach with
-Gaussian processes was developed using tactile feedback from the iCub's sensor
-skin. This approach was evaluated on the iCub robot, where the learned model
-accurately predicts contact forces, is robust to changes in the environment and
-outperforms existing analytic dynamic models that make use of force/torque
-sensor data. 
+Thus, we continued research in inverse dynamics model learning in situations with contacts. A mixture of experts approach combined with
+Gaussian Processes was proposed in \cite{Calandra_ICRA15}, to learn the torque contributions due to contact exploiting the iCub's tactile and force/torque sensors. This approach was evaluated on the iCub robot, where the learned model accurately predicts contact forces, is robust to changes in the environment and outperforms existing analytic dynamic models that make use of force/torque sensor data. The interest in the use of such learned models over analytical ones lies also in the fact that learned models do not require a spatial calibration of the skin taxels, a procedure that in complex robots such as iCub is often prone to errors that significantly impact the torque estimation \cite{DelPrete2011}.
 An exemplary task is illustrated in Figure~\ref{fig:exp3:icuparis_experiment_bars} 
 when obstacles are introduced on both sides of a planned circular motion.
-In Figure~\ref{fig:exp3:gating}, it can be seen that the mixture-of-experts recognize the presence of the two different contacts and opportunely active the corresponding 
-expert to compensate for the contact.
+In Figure~\ref{fig:exp3:gating}, it can be seen that the mixture-of-experts recognizes the presence of the two different contacts and opportunely active the corresponding expert to compensate for the contact.
 As a result, the torques predicted from this approach (red curve) closely follow the ground truth (blue curve) and outperform the analytic model (green curve).
-Further details can be found in \cite{Calandra_ICRA15}. 
+%Further details can be found in \cite{Calandra_ICRA15}. 
 
 	\begin{figure}[t]
 		\begin{minipage}{.43\linewidth}
@@ -732,11 +726,11 @@ We have been leading research on computed torque control leveraging low-gain con
 In computed torque control, robot dynamics are predicted by dynamic models.
 This enables more compliant control, as the gains of the feedback term can be
 lowered, because the task of compensating for robot dynamics is delegated from
-the feedback to the feedforward term.  We already showed that Gaussian process
+the feedback to the feedforward term.  We already showed that Gaussian Process
 regression is an effective method for learning computed torque control, by
-setting the feedforward torques to the mean of the Gaussian process.  During
+setting the feedforward torques to the mean of the Gaussian Process.  During
 the second year of the project, we extended this work by also exploiting the
-variance predicted by the Gaussian process, by lowering the gains if the
+variance predicted by the Gaussian Process, by lowering the gains if the
 variance is low \cite{Albertoetal14}.  This enables an automatic adaptation of
 the gains to the uncertainty in the computed torque model, and leads to more
 compliant low-gain control as the robot learns more accurate models over time.
@@ -826,11 +820,14 @@ pre-specification of the task hierarchy. However, in many contexts it is
 difficult to organize the tasks in a stack and define their relative importance
 in forms of priorities. When priorities are strict, a higher task can completely
 block lower tasks, which can result in movements that are not satisfactory for
-the robot mission (e.g., its ``global'' task). 
+the robot mission (e.g., its ``global'' task). Swapping tasks can result in discontinuities of the control law.
+Moreover, the task priority must be defined a priori, which
+is typically done by an expert able to define the tasks and their relative priorities to produce smooth behaviors.
 
-In \cite{Salini-2011-ID348}, a second controller is based on \textit{soft task hierarchies}, where
-the solution is typically given by a combination of weighted tasks. The importance or ``soft priority'' of each individual
-task is represented by a scalar weight. By tuning the vector of scalar weights,
+Another set of whole-body controllers is based on \textit{soft task hierarchies}, where
+the solution is typically given by a combination of weighted tasks (see for example \cite{Salini-2011-ID348}). 
+The importance or ``soft priority'' of each individual
+task is represented by a scalar function, often named ``weight''. By tuning the vector of scalar weights,
 evolving in time, the global robot behaviour can be optimised. Liu et
 al. \cite{liu2015} propose a generalised projector (GHC) that handles
 strict and non-strict priorities with smooth transitions when tasks priorities
@@ -853,13 +850,12 @@ interaction forces etc.).
 \label{figure:scheme}
 \end{figure}
 
-In this task we propose a first solution to the problem of how these weights can
-be learned through trial-and-error. We study how the \textit{temporal} profiles
-of the task weights can be learned from a reward function, which is assumed to
+An intuitive solution to the problem of defining the weights is to learn or optimize them through trial-and-error. 
+We study how the \textit{temporal} profiles of the task weights can be learned from a reward function, which is assumed to
 be given\footnote{For many robotic task, e.g., tracking desired center-of-mass
 or end-effector trajectories while avoiding obstacles, such reward functions
 have been defined in \cite{Kober_IJRR_2013}.}. 
-
+As a learning algorithm, we choose CMA-ES \cite{Hansen-2001-ID362}, a stochastic optimization derivative-free algorithm that is suitable for the optimization of non-linear and non-convex objective functions. The main reason for using CMA-ES is that it is relatively simple to use and with a small number of free parameters. However, any other optimization algorithm with similar properties could be used.
 As a first step towards a controller that is capable of handling multiple tasks
 and constraints on a complex robot, while allowing us to efficiently learn the
 task priorities, we propose a regularized version of the Unified Framework (RUF)
@@ -926,6 +922,8 @@ replicates, our RUF+CMA-ES finds 90\% of the solutions found by our RUF+CMA-ES
 satisfies the constraints, while only 75\% of the solutions of GHC+learning are
 acceptable. Furthermore, the final best solution found by RUF+CMA-ES outperforms
 the one of GHC+CMA-ES, as shown in Figure~\ref{fig:activation_policy} (c).
+
+
 
 %This paper presents the control framework implemented on the humanoid robot iCub for one foot balancing and motion control.
 %This framework ensures a degree of compliance for the multi-body system, which allows for safe human robot interaction.
