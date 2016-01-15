@@ -98,7 +98,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Whole-body multi-contact motion in Humans and Humanoids:\\mid-term advances of the CoDyCo european project}
+\title{Whole-body multi-contact motion in Humans and Humanoids:\\mid-term advances of the CoDyCo European project}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{}
@@ -216,7 +216,7 @@ Looking at whole-body multi-contact motion in Humans and Humanoids through the p
 \item leverage machine learning methods for acquiring models of compliant contact with the environment and physical interactions with humans and provide the humanoid robot control architecture with the core abilities for the adaptation, generalization and self-improvement of both control laws and tasks related to these types of physical interaction.
 \end{enumerate}
 
-In these domains, numerous technological and scientific developments have been led over the last decades. A brief overview of these related works is provided in the next section. The strength of the CoDyCo approach with respect to some of these existing works is to gather expertises in different fields around a very challenging scientific question. Interesting synergies between these different domains are much more likely to  emerge in these conditions. The following sections are directly related to three scientific domains mentioned here-before and describe the work led within the framework of the CoDyCo project in human postural control and whole-body motion in contact with the environment, whole-body controllers and learning respectively. Future works are described in the conclusion which also summarizes the major findings of the project.
+In these domains, numerous technological and scientific developments have been led over the last decades. A brief overview of these related works is provided in the next section. The strength of the CoDyCo approach with respect to some of these existing works is to gather expertises in different fields around a very challenging scientific question. Interesting synergies between these different domains are much more likely to  emerge in these conditions. The following sections are directly related to three scientific domains mentioned here-before and describe the work led within the framework of the CoDyCo project in human postural control and whole-body motion in contact with the environment, whole-body controllers and learning respectively. Future works are described in the conclusion which also summarizes the major contributions of the project.
 
 \section{State-of-the-art}
 
@@ -263,7 +263,7 @@ While all of these frameworks are well motivated in their domains, they have two
 
 %\subsection{Human postural control and whole body motion in contact with environment}
 \section{Human postural control and whole body motion in contact with the environment}
-The aim of the work performed on human postural control and whole body motion in contact with environment is to provide a solid multidisciplinary base for future research work. We made a thorough review and summary of the recent relevant literature on human postural control and whole body motion in contact with environment\footnote{Cf. \href{https://github.com/robotology-playground/codyco-deliverables/blob/master/D2.1/pdf/D2.1.pdf?raw=true}{\textbf{CoDyCo deliverable~2.1}}}. The review examines postural control strategies without and with additional support contacts, types of perturbations that are commonly used to study neuromuscular functions involved in postural control and reviews the methods for stability evaluation of bipedal systems. The review is concluded with examination of stability metrics that can be applied for non-planar contacts. Based on this review an experimental protocol has been designed to explore human strategies used when non-coplanar assistive contacts are made.
+The aim of the work performed on human postural control and whole body motion in contact with environment is to provide a solid multidisciplinary base for future research work. We made a thorough review and summary of the recent relevant literature on human postural control and whole body motion in contact with environment\footnote{Cf. \href{https://github.com/robotology-playground/codyco-deliverables/blob/master/D2.1/pdf/D2.1.pdf?raw=true}{\textbf{\underline{CoDyCo deliverable~2.1}}}}. The review examines postural control strategies without and with additional support contacts, types of perturbations that are commonly used to study neuromuscular functions involved in postural control and reviews the methods for stability evaluation of bipedal systems. The review is concluded with examination of stability metrics that can be applied for non-planar contacts. Based on this review an experimental protocol has been designed to explore human strategies used when non-coplanar assistive contacts are made.
 
 %\subsubsection{Definition and design of experimental protocols}
 %Two state-of-the-art methods were used for perturbation of balance as shown on Figure~\ref{fig:exp_protocol_W2} that will allow us to gain understanding how human brain deals with environment in the sense of supportive contacts. Using the same setup we can also validate all biomechanical findings on robotic systems by simply substituting the human subject with a robot. The Moog Haptic master robot will be used in experiments with compliant and unpredictable contacts.
@@ -547,7 +547,7 @@ In coordination with the local controller, we also have explored the contributio
 	\item a non scripted foot step placement optimization.
 \end{itemize}
 
-As a  continuation of these works, in order to compute optimal time, duration and position of footsteps along with the center of mass trajectory of a humanoid, a novel mixed-integer model of the system is introduced in \cite{ibanezIROS2014}. The introduction of this model in a predictive control problem brings the definition of a Mixed-Integer Quadratic Program, subject to linear constraints. Simulation results demonstrate the simultaneous adaptation of the gait pattern and posture of the humanoid, in a walking activity under large disturbances, to efficiently compromise between task performance and balance. In addition, a push recovery scenario displays how, using a single balance-performance ratio, distinct behaviors of the humanoid can be specified. Results have been obtained in simulation\footnote{A video associated to this work can be found \href{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/ibanez\_IROS2014.mp4}{here}.} and are being implemented on the TORO robot developed at DLR. Two simple and novel approaches to solve for 3D locomotion with multiple non-coplanar contacts have are also being explored in \cite{perrin2015}. Both formulations use model predictive control to generate dynamically balanced trajectories with no restrictions on the center of mass height trajectory. The first formulation treats the balance criterion as an objective function, and solves the control problem using a sequence of alternating convex quadratic programs, while the second formulation considers the criterion as constraints to the problem, and solves a succession of convex quadratically constrained quadratic programs. Preliminary results have been obtained in a scenario where a hand contact on a vertical wall is used to improve balance. A staircase climbing scenario has also been studied.\\
+As a  continuation of these works, in order to compute optimal time, duration and position of footsteps along with the center of mass trajectory of a humanoid, a novel mixed-integer model of the system is introduced in \cite{ibanezIROS2014}. The introduction of this model in a predictive control problem brings the definition of a Mixed-Integer Quadratic Program, subject to linear constraints. Simulation results demonstrate the simultaneous adaptation of the gait pattern and posture of the humanoid, in a walking activity under large disturbances, to efficiently compromise between task performance and balance. In addition, a push recovery scenario displays how, using a single balance-performance ratio, distinct behaviors of the humanoid can be specified. Results have been obtained in simulation\footnote{A video associated to this work can be found \href{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/ibanez\_IROS2014.mp4}{\textbf{\underline{here}}}.} and are being implemented on the TORO robot developed at DLR. Two simple and novel approaches to solve for 3D locomotion with multiple non-coplanar contacts have are also being explored in \cite{perrin2015}. Both formulations use model predictive control to generate dynamically balanced trajectories with no restrictions on the center of mass height trajectory. The first formulation treats the balance criterion as an objective function, and solves the control problem using a sequence of alternating convex quadratic programs, while the second formulation considers the criterion as constraints to the problem, and solves a succession of convex quadratically constrained quadratic programs. Preliminary results have been obtained in a scenario where a hand contact on a vertical wall is used to improve balance. A staircase climbing scenario has also been studied.\\
 
 Bootstrapping between the local controller and a more global reasonning approach also lies in the capability to incrementally learn and adapt the models used for control.
 Thus, we continued research in inverse dynamics model learning in situations with contacts. A mixture of experts approach combined with
@@ -819,14 +819,14 @@ Eq. \eqref{tau}. Both loops runs at the same frequency of 100 Hz.
 The experiment consists in two phases. In the first phase, we change the desired $q_d$ in order to generate 
 \emph{internal} motions, which do not perturb the stability of the robot momentum thanks to the prioritization of tasks
 described in the previous section. In the second phase, we apply external perturbations by interacting with the robot as illustrated in Figure~\ref{fig:footBalancing}. This 
-interaction  results to be safe thanks to the compliance at joint level\footnote{A video of the experiment is available \href{https://www.youtube.com/watch?v=VrPBSSQEr3A}{here} for the interested reader.}.
+interaction  results to be safe thanks to the compliance at joint level\footnote{A video of the experiment is available \href{https://www.youtube.com/watch?v=VrPBSSQEr3A}{\textbf{\underline{here}}} for the interested reader.}.
 
 For more detailed information and description of the system architecture (comprising torque and forces estimation and low level torque control) see \cite{noriFrontiers2015}.
 
 \begin{figure}[h!]
 \centering
 {\includegraphics[width=\linewidth]{images/single_foot_balancing.jpg}}
-\caption{The picture shows the iCub while performing compliant single foot balancing. Details on the controller can be found in \cite{Nori2015a}. A video of the task is available on \href{https://www.youtube.com/watch?v=SYVCbzGsBF4}{youtube}.}%\protect\footnotemark.}
+\caption{The picture shows the iCub while performing compliant single foot balancing. Details on the controller can be found in \cite{Nori2015a}. A video of the task is available on \href{https://www.youtube.com/watch?v=SYVCbzGsBF4}{\textbf{\underline{youtube}}}.}%\protect\footnotemark.}
 \label{fig:footBalancing}
 \end{figure}
 
@@ -871,7 +871,7 @@ two simulated robotic platforms. A robot arm with five joints was used for
 reaching multiple targets while keeping the roll angle constant. On the humanoid
 robot Nao, we show how complex skills like reaching (see Figure~\ref{fig:naoReachingTask}) and balancing can be
 inferred from desired center of gravity or end effector coordinates. This work was published at 
-the international conference on humanoid robots \cite{Rueckert2014}\footnote{Supplemental Matlab demo code is available \href{http://www.ausy.tu-darmstadt.de/Team/ElmarRueckert}{\textbf{online}}.}. 
+the international conference on humanoid robots \cite{Rueckert2014}\footnote{Supplemental Matlab demo code is available \href{http://www.ausy.tu-darmstadt.de/Team/ElmarRueckert}{\textbf{\underline{online}}}.}. 
 
 %\subsubsection{Generalizing and Improving Elementary Tasks with Contacts}
 \subsection{Generalizing and Improving Elementary Tasks with Contacts}
@@ -1046,7 +1046,7 @@ parameterized with Dynamical Movement Primitives, whose parameters are optimized
 based on a general compatibility principle, which is independent of the robot's
 topology, tasks or environment. Two test cases on a simulation of a humanoid
 robot are used to demonstrate the successful optimization of initially interfering tasks\footnote{A video summarizing the outcome of this work can be viewed
-\href{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/lober_Humanoids2014.mp4}{\textbf{here}}.}.\\
+\href{http://pages.isir.upmc.fr/~padois/website/fichiers/videos/lober_Humanoids2014.mp4}{\textbf{\underline{here}}}.}.\\
 
 \begin{figure}
 \centering
@@ -1481,21 +1481,19 @@ the one of GHC+CMA-ES, as shown in Figure~\ref{fig:activation_policy} (c).
 
 In this paper we report on the current state-of-the-art in whole-body dynamics studies concerning human movement analysis, robot control and learning. We outline a roadmap of experiments  and  research  questions  that  are  currently  explored  by  the  consortium  of the European Project CoDyCo.
 
-We also briefly present some of the recent CoDyCo advances in these domains. These numerous intertwined contributions cover four domains: control theory, machine learning, human behavioural experiments and software. They can be summarized as follows:
-\begin{itemize}
-\item Design, implementation and maintenance of a whole-body control software infrastructure. The infrastructure consists of several modules which significantly improve  controllers accuracy and robustness thanks to a module for whole-body torques estimation, a module for force/torque sensors calibration, a module for whole-body dynamics identification and a module for dynamics estimation.
-\item Design of experimental protocols and data collection of experiments for studying humans in multi-contact interaction with the environment. This includes experiments on hand-contact assisted balancing for examining the functional role of supportive hand contact, a metric for whole-body stability characterisation,  experiments of human-robot physical interaction to study strategies of dealing with uncertainties in contact and a study on human contact choice learning through physical interaction.
-\item Design and test of state of the art control strategies for whole-body motion with multiple contacts through the development of a solver for the whole-body reactive control that provides an expressive and rich description of the control problem as well as an efficient way of solving it.
-\item Design and simulation of whole-body control strategies in presence of non-rigid contacts and experiments on postural control under multiple environmental contacts while controlling the operational space dynamics.
-\item Development of a theoretical framework for representing movement primitives within probabilistic contexts.
-\item Design of a model-free probabilistic representation for simultaneous representation of kinematic and force trajectories.
-\item Preliminary studies on the problem of learning strategies to adapt temporal activation of low-level primitives and to deal with interferences in combining multiple whole-body tasks.
-\item Implementation of a validation scenario consisting in whole-body motion control subject to postural, contact and goal-directed (Cartesian) constraints.
-\end{itemize}
+We also briefly present some of the recent CoDyCo advances in these domains. These numerous intertwined contributions cover four domains: control theory, machine learning, human behavioural experiments and software. They can be summarized as follows.
+
+From a technological and software point of view, a whole-body control software infrastructure has been designed and implemented. This infrastructure consists of several modules which significantly improve controllers accuracy and robustness thanks to a module for whole-body torques estimation, a module for force/torque sensors calibration, a module for whole-body dynamics identification and a module for dynamics estimation.
+
+On the human side, several experimental protocols have been designed and data of experiments for studying humans in multi-contact interaction with the environment have been collected and analysed. This includes experiments on hand-contact assisted balancing for examining the functional role of supportive hand contact, a metric for whole-body stability characterisation, experiments of human-robot physical interaction to study strategies of dealing with uncertainties in contact and a study on human contact choice learning through physical interaction.
+
+From a control point of view, state of the art control strategies for whole-body motion with multiple contacts have been implemented through the development of a solver for the whole-body reactive control that provides an expressive and rich description of the control problem as well as an efficient way of solving it. Original  whole-body control reactive and predictive strategies in presence of non-rigid contacts and experiments on postural control under multiple environmental contacts while controlling the operational space dynamics have also been developed and tested in simulation. A validation scenario consisting in whole-body motion control subject to postural, contact and goal-directed (Cartesian) constraints has also been implemented.
+
+Finally, on the learning side a theoretical framework for representing movement primitives within probabilistic contexts has been developed to improve skill learning from noisy observations. Studies on the problem of learning strategies to adapt temporal activation of low-level primitives and to deal with interferences in combining multiple whole-body tasks have also been initiated.
 
 Future works will be focused on the two challenges defined in introduction. More specifically, we would like to show that the iCub is able to learn how to exploit compliant contacts during whole-body tasks. Suitable control actions will be learnt (either on-the-fly or after few trials) and adapted to the compliance of the perceived contact, to be learnt on-line and a-priori unspecified. 
 
-We also aim at showing the iCub capability to successfully take advantage of the help of a naïve caregiver willing to give support in performing a task otherwise impossible to perform. Proper task execution will require a certain amount of training/learning (ideally boot-strapped using the findings of the human experiments), to be performed either off-line (i.e. prior to the demonstration) or on-line (i.e. during successive trials). The naive caregiver will be given a set of instructions to leave a natural degree of autonomy. The iCub will be in charge of properly tuning its own compliance flowing the caregiver intentions. The expected validation scenario will involve a caregiver helping the iCub to stand (either from the ground or from a chair).
+We also aim at showing the iCub capability to successfully take advantage of the help of a naive caregiver willing to give support in performing a task otherwise impossible to perform. Proper task execution will require a certain amount of training/learning (ideally boot-strapped using the findings of the human experiments), to be performed either off-line (i.e. prior to the demonstration) or on-line (i.e. during successive trials). The naive caregiver will be given a set of instructions to leave a natural degree of autonomy. The iCub will be in charge of properly tuning its own compliance flowing the caregiver intentions. The expected validation scenario will involve a caregiver helping the iCub to stand (either from the ground or from a chair).
 
 These works and future works on dealing with compliant and unknown environments will provide significant advances in the understanding of the use of contacts both in human motor control and humanoid robot control.
 
